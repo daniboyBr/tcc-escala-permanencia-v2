@@ -13,7 +13,7 @@ class AlterUserTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::table('users', function (Blueprint $table) {
+		Schema::table('militar', function (Blueprint $table) {
 			$table->boolean('isAdmin')->default(false);
 			$table->integer('flgAtivo')->default(0);
 
@@ -30,12 +30,12 @@ class AlterUserTable extends Migration
 			$table->unsignedBigInteger('id_atualizadoPor');
 		});
 
-		Schema::table('users', function (Blueprint $table) {
+		Schema::table('militar', function (Blueprint $table) {
 			$table->foreign('organizacaoMilitar_id')->references('id')->on('organizacaoMilitar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 			$table->foreign('secao_id')->references('id')->on('secao')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 			$table->foreign('postoGraduacao_id')->references('id')->on('postoGraduacao')->onDelete('NO ACTION')->onUpdate('NO ACTION');
-			$table->foreign('id_inseridoPor')->references('id')->on('users')->onDelete('NO ACTION')->onUpdate('NO ACTION');
-			$table->foreign('id_atualizadoPor')->references('id')->on('users')->onDelete('NO ACTION')->onUpdate('NO ACTION');
+			$table->foreign('id_inseridoPor')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
+			$table->foreign('id_atualizadoPor')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 		});
 	}
 
@@ -46,8 +46,12 @@ class AlterUserTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::table('users', function (Blueprint $table) {
-			$table->dropForeign(['organizacaoMilitar_id', 'secao_id', 'postoGraduacao_id', 'id_inseridoPor', 'id_atualizadoPor']);
+		Schema::table('militar', function (Blueprint $table) {
+			$table->dropForeign('organizacaoMilitar_id');
+			$table->dropForeign('secao_id');
+			$table->dropForeign('postoGraduacao_id');
+			$table->dropForeign('id_inseridoPor');
+			$table->dropForeign('id_atualizadoPor');
 			$table->dropColumn([
 				'nomeGuerra', 'imagem', 'ramal', 'telefoneResidencial', 'telefoneCelular', 'id_inseridoPor', 'id_atualizadoPor'
 			]);
