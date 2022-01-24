@@ -53,7 +53,14 @@ class RegisterController extends Controller
 		return Validator::make($data, [
 			'name' => ['required', 'string', 'max:255'],
 			'email' => ['required', 'string', 'email', 'max:255', 'unique:militar'],
+			'organizacaoMilitar_id' => ['required'],
+			'secao_id' => ['required'],
+			'postoGraduacao_id' => ['required'],
+			'telefoneResidencial' => ['string', 'numeric', 'max:10'],
+			'telefoneCelular' => ['string', 'numeric', 'max:10'],
 			'password' => ['required', 'string', 'min:8', 'confirmed'],
+		], [
+			'organizacaoMilitar_id|secao_id|postoGraduacao_id' => 'Obrigatório escolher uma opção.'
 		]);
 	}
 
