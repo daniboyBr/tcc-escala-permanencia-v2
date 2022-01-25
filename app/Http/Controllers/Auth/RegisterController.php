@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Militar;
+use App\Models\OrganizacaoMilitar;
+use App\Models\PostoGraduacao;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -24,6 +26,14 @@ class RegisterController extends Controller
 	*/
 
 	use RegistersUsers;
+
+	public function showRegistrationForm()
+	{
+		return view('auth.register', [
+			'organizacao' => OrganizacaoMilitar::where('flgAtivo', 1)->get(['id', 'nome']),
+			'posto' => PostoGraduacao::where('flgAtivo', 1)->get(['id', 'nome'])
+		]);
+	}
 
 	/**
 	 * Where to redirect users after registration.
@@ -56,11 +66,9 @@ class RegisterController extends Controller
 			'organizacaoMilitar_id' => ['required'],
 			'secao_id' => ['required'],
 			'postoGraduacao_id' => ['required'],
-			'telefoneResidencial' => ['string', 'numeric', 'max:10'],
-			'telefoneCelular' => ['string', 'numeric', 'max:10'],
+			'telefoneResidencial' => ['numeric', 'max:10'],
+			'telefoneCelular' => ['numeric', 'max:10'],
 			'password' => ['required', 'string', 'min:8', 'confirmed'],
-		], [
-			'organizacaoMilitar_id|secao_id|postoGraduacao_id' => 'Obrigatório escolher uma opção.'
 		]);
 	}
 

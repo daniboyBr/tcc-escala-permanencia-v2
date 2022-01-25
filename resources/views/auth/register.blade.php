@@ -101,9 +101,10 @@
                             <div class="col-md-6">
                                 <select id="organizacaoMilitar_id" class="form-select @error('organizacaoMilitar_id') is-invalid @enderror" aria-label="Organização Militar" name="organizacaoMilitar_id" value="{{ old('organizacaoMilitar_id') }}" required>
                                     <option selected>-- Selecione uma opção --</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    @foreach ($organizacao as $org)
+                                        <option value="{{$org->id}}">{{$org->nome}}</option>
+                                    @endforeach
+
                                 </select>
 
                                 @error('organizacaoMilitar_id')
@@ -139,9 +140,9 @@
                             <div class="col-md-6">
                                 <select id="postoGraduacao_id" class="form-select @error('postoGraduacao_id') is-invalid @enderror" aria-label="Posto de Graduação" name="postoGraduacao_id" value="{{ old('postoGraduacao_id') }}" required>
                                     <option selected>-- Selecione uma opção --</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    @foreach ($posto as $pt)
+                                        <option value="{{$pt->id}}">{{$pt->nome}}</option>
+                                    @endforeach
                                 </select>
 
                                 @error('postoGraduacao_id')

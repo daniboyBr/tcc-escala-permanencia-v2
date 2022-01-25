@@ -17,7 +17,7 @@ class CreatePostoGraduacaosTable extends Migration
 			$table->id();
 			$table->string('nome', 45);
 			$table->tinyInteger('nivel');
-			$table->boolean('flAtivo')->default(true);
+			$table->boolean('flgAtivo')->default(true);
 			$table->string('inseridoPor', 100)->nullable();
 			$table->string('atualizadoPor', 100)->nullable();
 			$table->timestamps();

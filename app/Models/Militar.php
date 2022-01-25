@@ -24,6 +24,18 @@ class Militar extends Authenticatable
 		'name',
 		'email',
 		'password',
+		'nomeGuerra',
+		'imagem',
+		'ramal',
+		'telefoneResidencial',
+		'telefoneCelular',
+		'email',
+		'flAtivo',
+		'inseridoPor',
+		'atualizadoPor',
+		'organizacaoMilitar_id',
+		'secao_id',
+		'postoGraduacao_id'
 	];
 
 	/**
@@ -44,4 +56,19 @@ class Militar extends Authenticatable
 	protected $casts = [
 		'email_verified_at' => 'datetime',
 	];
+
+	public function organizacao()
+	{
+		return $this->hasOne(OrganizacaoMilitar::class, 'id', 'organizacaoMilitar_id');
+	}
+
+	public function secao()
+	{
+		return $this->hasOne(Secao::class, 'id', 'secao_id');
+	}
+
+	public function graduacao()
+	{
+		return $this->hasOne(PostoGraduacao::class, 'id', 'postoGraduacao_id');
+	}
 }
