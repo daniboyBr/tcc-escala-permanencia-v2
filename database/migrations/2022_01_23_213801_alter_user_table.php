@@ -24,10 +24,10 @@ class AlterUserTable extends Migration
 			$table->string('nomeGuerra', 60);
 			$table->string('imagem', 45)->nullable();
 			$table->string('ramal', 45)->nullable();
-			$table->string('telefoneResidencial', 10)->nullable();
-			$table->string('telefoneCelular', 10)->nullable();
-			$table->unsignedBigInteger('id_inseridoPor');
-			$table->unsignedBigInteger('id_atualizadoPor');
+			$table->string('telefoneResidencial', 12)->nullable();
+			$table->string('telefoneCelular', 12)->nullable();
+			$table->unsignedBigInteger('id_inseridoPor')->nullable();
+			$table->unsignedBigInteger('id_atualizadoPor')->nullable();
 		});
 
 		Schema::table('militar', function (Blueprint $table) {

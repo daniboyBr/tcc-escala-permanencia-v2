@@ -62,12 +62,14 @@ class RegisterController extends Controller
 	{
 		return Validator::make($data, [
 			'name' => ['required', 'string', 'max:255'],
+			'nomeGuerra' => ['required', 'string', 'max:60'],
 			'email' => ['required', 'string', 'email', 'max:255', 'unique:militar'],
-			'organizacaoMilitar_id' => ['required'],
-			'secao_id' => ['required'],
-			'postoGraduacao_id' => ['required'],
-			'telefoneResidencial' => ['numeric', 'max:10'],
-			'telefoneCelular' => ['numeric', 'max:10'],
+			'organizacaoMilitar_id' => ['required', 'exists:organizacaoMilitar,id'],
+			'secao_id' => ['required', 'exists:secao,id'],
+			'postoGraduacao_id' => ['required', 'exists:postoGraduacao,id'],
+			'ramal' => ['max:10'],
+			'telefoneResidencial' => ['numeric', 'digits_between:0,10'],
+			'telefoneCelular' => ['numeric', 'digits_between:0,11'],
 			'password' => ['required', 'string', 'min:8', 'confirmed'],
 		]);
 	}
@@ -83,6 +85,13 @@ class RegisterController extends Controller
 		return Militar::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
+			'nomeGuerra' => $data['nomeGuerra'],
+			'organizacaoMilitar_id' => $data['organizacaoMilitar_id'],
+			'secao_id' => $data['secao_id'],
+			'postoGraduacao_id' => $data['postoGraduacao_id'],
+			'ramal' => $data['ramal'],
+			'telefoneResidencial' => $data['telefoneResidencial'],
+			'telefoneCelular' => $data['telefoneCelular'],
 			'password' => Hash::make($data['password']),
 		]);
 	}

@@ -99,10 +99,10 @@
                             <label for="organizacaoMilitar_id" class="col-md-4 col-form-label text-md-end">{{ __('Organizaçao Militar') }}</label>
 
                             <div class="col-md-6">
-                                <select id="organizacaoMilitar_id" class="form-select @error('organizacaoMilitar_id') is-invalid @enderror" aria-label="Organização Militar" name="organizacaoMilitar_id" value="{{ old('organizacaoMilitar_id') }}" required>
-                                    <option selected>-- Selecione uma opção --</option>
+                                <select id="organizacaoMilitar_id" class="form-select @error('organizacaoMilitar_id') is-invalid @enderror" aria-label="Organização Militar" name="organizacaoMilitar_id" required>
+                                    <option selected value="">-- Selecione uma opção --</option>
                                     @foreach ($organizacao as $org)
-                                        <option value="{{$org->id}}">{{$org->nome}}</option>
+                                        <option value="{{$org->id}}"    {{ ($org->id ==  old('organizacaoMilitar_id')) ? 'selected' : '' }}>{{$org->nome}}</option>
                                     @endforeach
 
                                 </select>
@@ -119,11 +119,9 @@
                             <label for="secao_id" class="col-md-4 col-form-label text-md-end">{{ __('Seção') }}</label>
 
                             <div class="col-md-6">
-                                <select id="secao_id" class="form-select @error('secao_id') is-invalid @enderror" aria-label="Seção" name="secao_id" value="{{ old('secao_id') }}" required>
-                                    <option selected>-- Selecione uma opção --</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <input type="hidden" id="secao-id" value="{{ old('secao_id') }}">
+                                <select id="secao_id" class="form-select @error('secao_id') is-invalid @enderror" aria-label="Seção" name="secao_id" required>
+                                    <option value="" selected>-- Selecione uma opção --</option>
                                 </select>
 
                                 @error('secao_id')
@@ -138,10 +136,10 @@
                             <label for="postoGraduacao_id" class="col-md-4 col-form-label text-md-end">{{ __('Posto de Graduação') }}</label>
 
                             <div class="col-md-6">
-                                <select id="postoGraduacao_id" class="form-select @error('postoGraduacao_id') is-invalid @enderror" aria-label="Posto de Graduação" name="postoGraduacao_id" value="{{ old('postoGraduacao_id') }}" required>
+                                <select id="postoGraduacao_id" class="form-select @error('postoGraduacao_id') is-invalid @enderror" aria-label="Posto de Graduação" name="postoGraduacao_id" required>
                                     <option selected>-- Selecione uma opção --</option>
                                     @foreach ($posto as $pt)
-                                        <option value="{{$pt->id}}">{{$pt->nome}}</option>
+                                        <option value="{{$pt->id}}" {{ ($pt->id ==  old('postoGraduacao_id')) ? 'selected' : '' }}>{{$pt->nome}}</option>
                                     @endforeach
                                 </select>
 
@@ -188,4 +186,58 @@
         </div>
     </div>
 </div>
+<script>
+    const csrf_token = document.querySelector('meta[name="csrf-token"]')['content']
+    const select_om = document.getElementById("organizacaoMilitar_id");
+
+    select_om.addEventListener('change',function() {
+        let select = document.getElementById('organizacaoMilitar_id')
+        var option = select.options[select.selectedIndex].value
+        
+        if(!option){ return }
+
+        fetch(`/organizacao-militar/${option}/secao`, {
+            method: 'get',
+            credentials: "same-origin",
+            headers: {
+                'X-CSRF-TOKEN': csrf_token
+            }
+        })
+        .then((data) =>{ return data.json() })
+        .then((data) => {
+            const select_secao = document.getElementById('secao_id');
+            var options =  select_secao.querySelectorAll("option");
+
+            for (const option of document.querySelectorAll('#form-select > option')) {
+                if (option.value == ''){
+                    continue;
+                }
+                option.remove();
+            }
+
+            // $('#secao_id option').each(function() {
+            //     if ($(this).val() == '' ) {
+            //         return;
+            //     }
+            //     $(this).remove();
+            // });
+            if(data){
+                data.secao.forEach(element => {
+
+                    var secaoSected = document.getElementById('secao-id').value
+                    if(secaoSected && element.id == secaoSected){
+                        select_secao.options[select_secao.options.length] = new Option(element.nome, element.id, false, true);
+                        return
+                    }
+                    select_secao.options[select_secao.options.length] = new Option(element.nome, element.id);
+                });
+            }
+        });
+    });
+
+    select_om.dispatchEvent(new Event('change'))
+
+
+</script>
 @endsection
+
