@@ -99,7 +99,7 @@
                             <label for="organizacaoMilitar_id" class="col-md-4 col-form-label text-md-end">{{ __('Organizaçao Militar') }}</label>
 
                             <div class="col-md-6">
-                                <select id="organizacaoMilitar_id" class="form-select @error('organizacaoMilitar_id') is-invalid @enderror" aria-label="Organização Militar" name="organizacaoMilitar_id" required>
+                                <select id="organizacaoMilitar_id" class="form-control form-select @error('organizacaoMilitar_id') is-invalid @enderror" aria-label="Organização Militar" name="organizacaoMilitar_id" required>
                                     <option selected value="">-- Selecione uma opção --</option>
                                     @foreach ($organizacao as $org)
                                         <option value="{{$org->id}}"    {{ ($org->id ==  old('organizacaoMilitar_id')) ? 'selected' : '' }}>{{$org->nome}}</option>
@@ -120,7 +120,7 @@
 
                             <div class="col-md-6">
                                 <input type="hidden" id="secao-id" value="{{ old('secao_id') }}">
-                                <select id="secao_id" class="form-select @error('secao_id') is-invalid @enderror" aria-label="Seção" name="secao_id" required>
+                                <select id="secao_id" disabled class="form-control form-select @error('secao_id') is-invalid @enderror" aria-label="Seção" name="secao_id" required>
                                     <option value="" selected>-- Selecione uma opção --</option>
                                 </select>
 
@@ -136,7 +136,7 @@
                             <label for="postoGraduacao_id" class="col-md-4 col-form-label text-md-end">{{ __('Posto de Graduação') }}</label>
 
                             <div class="col-md-6">
-                                <select id="postoGraduacao_id" class="form-select @error('postoGraduacao_id') is-invalid @enderror" aria-label="Posto de Graduação" name="postoGraduacao_id" required>
+                                <select id="postoGraduacao_id" class="form-control form-select @error('postoGraduacao_id') is-invalid @enderror" aria-label="Posto de Graduação" name="postoGraduacao_id" required>
                                     <option selected>-- Selecione uma opção --</option>
                                     @foreach ($posto as $pt)
                                         <option value="{{$pt->id}}" {{ ($pt->id ==  old('postoGraduacao_id')) ? 'selected' : '' }}>{{$pt->nome}}</option>
@@ -193,8 +193,13 @@
     select_om.addEventListener('change',function() {
         let select = document.getElementById('organizacaoMilitar_id')
         var option = select.options[select.selectedIndex].value
+        let secao_select = document.getElementById('secao_id')
+
         
-        if(!option){ return }
+        if(!option){
+            secao_select.setAttribute('disabled','disabled');
+            return 
+        }
 
         fetch(`/organizacao-militar/${option}/secao`, {
             method: 'get',
@@ -206,6 +211,7 @@
         .then((data) =>{ return data.json() })
         .then((data) => {
             const select_secao = document.getElementById('secao_id');
+            select_secao.removeAttribute('disabled')
             var options =  select_secao.querySelectorAll("option");
 
             for (const option of document.querySelectorAll('#form-select > option')) {

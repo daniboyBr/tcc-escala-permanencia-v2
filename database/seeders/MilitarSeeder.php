@@ -25,7 +25,7 @@ class MilitarSeeder extends Seeder
 
 		Militar::create([
 			'name' => 'Admin',
-			'email' => 'admin@escalapermanencia.com',
+			'email' => 'admin@permanencia.com',
 			'nomeGuerra' => 'Master',
 			'organizacaoMilitar_id' => $om->id,
 			'secao_id' => $secao->id,

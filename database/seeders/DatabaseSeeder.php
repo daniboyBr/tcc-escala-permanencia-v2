@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
 		$this->call(OrganizacaoMilitarSeeder::class);
 		$this->call(PostoGraduacaoSeeder::class);
 		$this->call(MilitarSeeder::class);
+		$this->call(PostoSericoSeeder::class);
 	}
 }
