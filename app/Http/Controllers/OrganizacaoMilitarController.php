@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class OrganizacaoMilitarController extends Controller
 {
+	public function __construct()
+	{
+		$this->middleware('admin')->only(['create', 'edit', 'update', 'destroy']);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -82,10 +87,14 @@ class OrganizacaoMilitarController extends Controller
 			return [];
 		}
 
-		$secao = OrganizacaoMilitar::find($organizacao)->secao;
+		$org = OrganizacaoMilitar::find($organizacao);
 
-		return ['secao' => $secao->filter(function ($item) {
-			return $item->flgAtivo;
-		})];
+		if (!$org) {
+			return [];
+		}
+
+		$secao = $org->secao()->where('flgAtivo', 1)->get(['id', 'nome']);
+	
+		return ['secao' => $secao];
 	}
 }

@@ -1,4 +1,11 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/material-dashboard.min.js": "/js/material-dashboard.min.js",
+    "/js/perfect-scrollbar.js": "/js/perfect-scrollbar.js",
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/bootstrap-selectpicker.js": "/js/bootstrap-selectpicker.js",
+    "/css/app.css": "/css/app.css",
+    "/css/bootstrap-selectpicker.css": "/css/bootstrap-selectpicker.css",
+    "/css/bootstrap.css": "/css/bootstrap.css",
+    "/css/material-dashboard.min.css": "/css/material-dashboard.min.css"
 }
