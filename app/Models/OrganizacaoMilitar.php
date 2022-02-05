@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\MainModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class OrganizacaoMilitar extends Model
+class OrganizacaoMilitar extends MainModel
 {
 	use HasFactory;
 

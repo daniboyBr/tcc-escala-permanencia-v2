@@ -2,18 +2,44 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Militar extends Authenticatable
-{
+class Militar extends Authenticatable implements Auditable
+{	        
+	use \OwenIt\Auditing\Auditable;
 	use HasApiTokens;
 	use HasFactory;
 	use Notifiable;
 
 	protected $table = 'militar';
+
+	protected $auditExclude = [
+        'password',
+		'remember_token',
+		'email_verified_at'
+    ];
+
+	protected $auditInclude = [
+		'name',
+		'email',
+		'password',
+		'nomeGuerra',
+		'imagem',
+		'ramal',
+		'telefoneResidencial',
+		'telefoneCelular',
+		'flAtivo',
+		'inseridoPor',
+		'atualizadoPor',
+		'organizacaoMilitar_id',
+		'secao_id',
+		'postoGraduacao_id'
+    ];
 
 	/**
 	 * The attributes that are mass assignable.
@@ -29,7 +55,6 @@ class Militar extends Authenticatable
 		'ramal',
 		'telefoneResidencial',
 		'telefoneCelular',
-		'email',
 		'flAtivo',
 		'inseridoPor',
 		'atualizadoPor',
@@ -70,5 +95,22 @@ class Militar extends Authenticatable
 	public function graduacao()
 	{
 		return $this->hasOne(PostoGraduacao::class, 'id', 'postoGraduacao_id');
+	}
+
+	public static function boot()
+	{
+		parent::boot();
+
+		self::creating(function ($model) {
+			$model->id_inseridoPor = Auth::user()->id;
+		});
+
+		self::updating(function ($model) {
+			$model->id_atualizadoPor = Auth::user()->id;
+		});
+
+		self::deleting(function ($model) {
+			$model->id_atualizadoPor = Auth::user()->id;
+		});
 	}
 }

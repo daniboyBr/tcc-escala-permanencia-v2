@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\MainModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class TipoImpedimento extends Model
+class TipoImpedimento extends MainModel
 {
     use HasFactory;
 }

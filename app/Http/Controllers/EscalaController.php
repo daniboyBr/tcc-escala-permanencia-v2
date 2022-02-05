@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Secao;
+
 class EscalaController extends Controller
 {
 	/**
