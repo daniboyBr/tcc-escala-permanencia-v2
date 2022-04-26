@@ -2,6 +2,7 @@
 
 namespace App\Audit\Drivers;
 
+use App\Models\Militar;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use OwenIt\Auditing\Contracts\Audit;
@@ -15,8 +16,10 @@ class AuditLogDriver implements AuditDriver
 	{
 		$implementation = Config::get('audit.implementation', \OwenIt\Auditing\Models\Audit::class);
 
+		$user = Auth::user()?? Militar::find(1);
+
 		Log::channel('gelf')->debug(
-			Auth::user()->name . ' ' . $model->getAuditEvent() . ' ' . $model->toAudit()['auditable_type'] ?? get_class($model),
+			$user->name . ' ' . $model->getAuditEvent() . ' ' . $model->toAudit()['auditable_type'] ?? get_class($model),
 			$model->toAudit()
 		);
 

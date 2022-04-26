@@ -150,7 +150,7 @@ return [
 
             // This optional option determines the host that will receive the
             // gelf log messages. Default is 127.0.0.1
-            'host' => '172.22.0.1',
+            'host' => '172.19.0.1',
 
             // This optional option determines the port on which the gelf
             // receiver host is listening. Default is 12201

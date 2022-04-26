@@ -106,8 +106,8 @@ return [
     |
     */
 
-    // 'driver' => 'database',
-    'driver' =>  App\Audit\Drivers\AuditLogDriver::class,
+    'driver' => 'database',
+    // 'driver' =>  App\Audit\Drivers\AuditLogDriver::class,
 
     /*
     |--------------------------------------------------------------------------

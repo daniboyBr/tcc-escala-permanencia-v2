@@ -9,12 +9,6 @@
             </div>
             <div class="card-body">
                 @include('template.messages')
-                <form action="{{ route('home-sistema') }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <input type="file" name="image">
-                    <button type="submit">Enviar</button>
-                </form>
-                <img src="{{ route('private-files', ['filename'=>'VuTWuHatd5feEO672l9xX3MrzSg6k7TinZ2qWhtW.jpg']) }}" alt="teste">
                 <div class="table-responsive">
                     <table class="table ">
                         <thead class="text-center">  		

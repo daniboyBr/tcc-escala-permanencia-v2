@@ -48,6 +48,36 @@ services:
     networks:
       - servernetwork
 
+  email:
+    image: marcopas/docker-mailslurper
+    container_name: mail-server
+    restart: always
+    volumes:
+        - ./Docker/smtp/config.json:/opt/mailslurper/config.json
+    ports:
+        - "8282:8282"
+        - "2500:2500"
+        - "8085:8085"
+    networks:
+      - servernetwork
+
+  ftp:
+    image: bogem/ftp
+    container_name: ftp-server
+    restart: always
+    volumes:
+        - ./Docker/upload:/home/vsftpd/
+    environment:
+      FTP_USER: permanencia
+      FTP_PASS: DaR6GM7PusCCSm2zWMSfR9sFGWaCVSCsKjr0BTxXg4E=
+      PASV_ADDRESS: 172.18.0.1 
+    ports:
+        - "20:20"
+        - "21:21"
+        - "47400-47470:47400-47470"
+    networks:
+      - servernetwork
+
 networks:
   servernetwork:
     driver: bridge

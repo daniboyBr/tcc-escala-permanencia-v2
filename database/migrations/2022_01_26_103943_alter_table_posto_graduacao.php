@@ -36,13 +36,13 @@ class AlterTablePostoGraduacao extends Migration
 	 */
 	public function down()
 	{
-		Schema::table('postoGraducao', function (Blueprint $table) {
+		Schema::table('postoGraduacao', function (Blueprint $table) {
 			$table->dropForeign('id_inseridoPor');
 			$table->dropForeign('id_atualizadoPor');
 			$table->dropColumn(['id_inseridoPor', 'id_atualizadoPor']);
 		});
 
-		Schema::table('postoGraducao', function (Blueprint $table) {
+		Schema::table('postoGraduacao', function (Blueprint $table) {
 			$table->string('inseridoPor', 100)->nullable();
 			$table->string('atualizadoPor', 100)->nullable();
 		});

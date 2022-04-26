@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Hash;
 
 class MilitarSeeder extends Seeder
 {
+	private $om;
+	private $secao;
+	private $postoGraduacao;
+
+	private function setDependences()
+	{
+		$this->om = OrganizacaoMilitar::where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
+		$this->secao = $this->om->secao()->where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
+		$this->postoGraduacao = PostoGraduacao::where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
+	}
+
 	/**
 	 * Run the database seeds.
 	 *
@@ -19,25 +30,52 @@ class MilitarSeeder extends Seeder
 	public function run()
 	{
 		$faker = \Faker\Factory::create();
-		$om = OrganizacaoMilitar::where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
-		$secao = $om->secao()->where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
-		$postoGraduacao = PostoGraduacao::where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
 
-		Militar::create([
-			'name' => 'Admin',
-			'email' => 'admin@permanencia.com',
-			'nomeGuerra' => 'Master',
-			'organizacaoMilitar_id' => $om->id,
-			'secao_id' => $secao->id,
-			'postoGraduacao_id' => $postoGraduacao->id,
-			'ramal' => $faker->numerify('###'),
-			'telefoneResidencial' => $faker->numerify('##########'),
-			'telefoneCelular' => $faker->numerify('###########'),
-			'isAdmin' => true,
-			'flgAtivo' => true,
-			'email_verified_at' => now(),
-			'remember_token' => Str::random(10),
-			'password' => Hash::make('12345678')
-		]);
+		$this->setDependences();
+
+		$militar = Militar::where(['email'=>'admin@permanencia.com'])->get()->first();
+
+		if(!$militar){
+
+			Militar::create([
+				'name' => 'Admin',
+				'email' => 'admin@permanencia.com',
+				'nomeGuerra' => 'Master',
+				'organizacaoMilitar_id' => $this->om->id,
+				'secao_id' => $this->secao->id,
+				'postoGraduacao_id' => $this->postoGraduacao->id,
+				'ramal' => $faker->numerify('###'),
+				'telefoneResidencial' => $faker->numerify('##########'),
+				'telefoneCelular' => $faker->numerify('###########'),
+				'isAdmin' => true,
+				'flgAtivo' => true,
+				'email_verified_at' => now(),
+				'remember_token' => Str::random(10),
+				'password' => Hash::make('12345678')
+			]);
+		}
+
+		$militar = Militar::where(['email'=>'sistema@permanencia.com'])->get()->first();
+
+		$this->setDependences();
+
+		if(!$militar){
+			Militar::create([
+				'name' => 'Sistema',
+				'email' => 'sistema@permanencia.com',
+				'nomeGuerra' => 'System',
+				'organizacaoMilitar_id' => $this->om->id,
+				'secao_id' => $this->secao->id,
+				'postoGraduacao_id' => $this->postoGraduacao->id,
+				'ramal' => $faker->numerify('###'),
+				'telefoneResidencial' => $faker->numerify('##########'),
+				'telefoneCelular' => $faker->numerify('###########'),
+				'isAdmin' => false,
+				'flgAtivo' => true,
+				'email_verified_at' => now(),
+				'remember_token' => Str::random(10),
+				'password' => Hash::make(Str::random(10))
+			]);
+		}
 	}
 }

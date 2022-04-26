@@ -1,6 +1,8 @@
 <?php
 
+use App\Mail\PermanenciaDelivery;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 	return view('welcome');
+});
+
+Route::get('envio-email', function(){
+	$user = new stdClass();
+	$user->email = 'admin@permanencia.com';
+	$user->name = 'Admin Enviando Email';
+	// return new PermanenciaDelivery($user);
+	Mail::send(new PermanenciaDelivery($user));
 });
 
 Auth::routes();
