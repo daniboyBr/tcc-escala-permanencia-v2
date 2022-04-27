@@ -47,11 +47,14 @@ class AlterUserTable extends Migration
 	public function down()
 	{
 		Schema::table('militar', function (Blueprint $table) {
-			$table->dropForeign('organizacaoMilitar_id');
-			$table->dropForeign('secao_id');
-			$table->dropForeign('postoGraduacao_id');
-			$table->dropForeign('id_inseridoPor');
-			$table->dropForeign('id_atualizadoPor');
+			$table->dropForeign(['organizacaoMilitar_id']);
+			$table->dropForeign(['secao_id']);
+			$table->dropForeign(['postoGraduacao_id']);
+			$table->dropForeign(['id_inseridoPor']);
+			$table->dropForeign(['id_atualizadoPor']);
+		});
+
+		Schema::table('militar', function (Blueprint $table) {
 			$table->dropColumn([
 				'nomeGuerra', 'imagem', 'ramal', 'telefoneResidencial', 'telefoneCelular', 'id_inseridoPor', 'id_atualizadoPor'
 			]);

@@ -37,8 +37,11 @@ class AlterTableOrganizacaoMilitar extends Migration
 	public function down()
 	{
 		Schema::table('organizacaoMilitar', function (Blueprint $table) {
-			$table->dropForeign('id_inseridoPor');
-			$table->dropForeign('id_atualizadoPor');
+			$table->dropForeign(['id_inseridoPor']);
+			$table->dropForeign(['id_atualizadoPor']);
+		});
+
+		Schema::table('organizacaoMilitar', function (Blueprint $table) {
 			$table->dropColumn(['id_inseridoPor', 'id_atualizadoPor']);
 		});
 

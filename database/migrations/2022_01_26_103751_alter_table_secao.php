@@ -37,8 +37,8 @@ class AlterTableSecao extends Migration
 	public function down()
 	{
 		Schema::table('secao', function (Blueprint $table) {
-			$table->dropForeign('id_inseridoPor');
-			$table->dropForeign('id_atualizadoPor');
+			$table->dropForeign(['id_inseridoPor']);
+			$table->dropForeign(['id_atualizadoPor']);
 			$table->dropColumn(['id_inseridoPor', 'id_atualizadoPor']);
 		});
 
