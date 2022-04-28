@@ -45,4 +45,11 @@ Route::middleware(['user.active'])->group(function () {
 	Route::prefix('private')->group(function () {
 		Route::get('files/{filename}',[\App\Http\Controllers\PrivateFilesController::class,'show'])->name('private-files');
 	});
+
+	Route::get('/secao', [\App\Http\Controllers\SecaoController::class, 'index']);
+    Route::get('/secao/create', [\App\Http\Controllers\SecaoController::class, 'create'])->name('create-secao');
+    Route::post('/secao/create', [\App\Http\Controllers\SecaoController::class, 'create']);
+    Route::get('/secao/{id}/update', [\App\Http\Controllers\SecaoController::class, 'edit'])->name('update-secao');
+    Route::put('/secao/{id}/update', [\App\Http\Controllers\SecaoController::class, 'edit']);
+    Route::get('/secao/{id}', [\App\Http\Controllers\SecaoController::class, 'show'])->name('view-secao');
 });

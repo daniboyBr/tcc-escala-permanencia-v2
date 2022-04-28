@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Secao;
 use Illuminate\Http\Request;
+use App\Models\OrganizacaoMilitar;
 
 class SecaoController extends Controller
 {
@@ -14,7 +15,7 @@ class SecaoController extends Controller
      */
     public function index()
     {
-        //
+        return view('secao/home', ['secao' => Secao::with('organizacao')->paginate(5)]);
     }
 
     /**
@@ -22,9 +23,22 @@ class SecaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $secao = new Secao();
+
+        if($request->isMethod('post')){
+            $secao->fill($request->all());
+            $secao->save();
+
+            return redirect()->route('view-secao', ['id'=> $secao->id])
+            ->with('success','Seção cadastrada com sucesso!');
+        }
+
+        return view('secao/create', [
+            'secao' => $secao,
+            'organizacao' => OrganizacaoMilitar::all(['nome','id'])
+        ]);
     }
 
     /**
@@ -44,9 +58,12 @@ class SecaoController extends Controller
      * @param  \App\Models\Secao  $secao
      * @return \Illuminate\Http\Response
      */
-    public function show(Secao $secao)
+    public function show(int $id)
     {
-        //
+        return view('secao/view', [
+            'secao' => Secao::findOrFail($id),
+            'organizacao' => OrganizacaoMilitar::all(['nome','id'])
+        ]);
     }
 
     /**
@@ -55,9 +72,22 @@ class SecaoController extends Controller
      * @param  \App\Models\Secao  $secao
      * @return \Illuminate\Http\Response
      */
-    public function edit(Secao $secao)
+    public function edit(Request $request, int $id)
     {
-        //
+        $secao = Secao::findOrFail($id);
+
+        if($request->isMethod('put')){
+            $secao->fill($request->all());
+            $secao->save();
+
+            return redirect()->route('view-secao', ['id'=> $secao->id])
+            ->with('success','Seção atualizado com sucesso!');
+        }
+
+        return view('secao/edit', [
+            'secao' => $secao,
+            'organizacao' => OrganizacaoMilitar::all(['nome','id'])
+        ]);
     }
 
     /**
