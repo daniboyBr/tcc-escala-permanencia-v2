@@ -57,7 +57,7 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $secao->onEachSide(5)->links('vendor.pagination.custom') }}
+                {{ $secao->links('vendor.pagination.custom-simple') }}
             </div>
         </div>
     </div>

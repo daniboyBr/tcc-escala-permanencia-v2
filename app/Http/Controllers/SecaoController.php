@@ -15,7 +15,8 @@ class SecaoController extends Controller
      */
     public function index()
     {
-        return view('secao/home', ['secao' => Secao::with('organizacao')->paginate(5)]);
+        $secao = Secao::with('organizacao')->paginate(5);
+        return view('secao/home', compact('secao'));
     }
 
     /**
