@@ -59,4 +59,11 @@ Route::middleware(['user.active'])->group(function () {
     Route::get('/posto-graduacao/{id}/update', [\App\Http\Controllers\PostoGraduacaoController::class, 'edit'])->name('update-graduacao');
     Route::put('/posto-graduacao/{id}/update', [\App\Http\Controllers\PostoGraduacaoController::class, 'edit']);
     Route::get('/posto-graduacao/{id}', [\App\Http\Controllers\PostoGraduacaoController::class, 'show'])->name('view-graduacao');
+
+	Route::get('/posto-servico', [\App\Http\Controllers\PostoServicoController::class, 'index']);
+    Route::get('/posto-servico/new', [\App\Http\Controllers\PostoServicoController::class, 'createNewPostoServico'])->name('create-posto');
+    Route::post('/posto-servico/new', [\App\Http\Controllers\PostoServicoController::class, 'createNewPostoServico']);
+    Route::get('/posto-servico/{id}/update', [\App\Http\Controllers\PostoServicoController::class, 'updatePostoServico'])->name('update-posto');
+    Route::put('/posto-servico/{id}/update', [\App\Http\Controllers\PostoServicoController::class, 'updatePostoServico']);
+    Route::get('/posto-servico/{id}', [\App\Http\Controllers\PostoServicoController::class, 'getPostoServico'])->name('view-posto');
 });

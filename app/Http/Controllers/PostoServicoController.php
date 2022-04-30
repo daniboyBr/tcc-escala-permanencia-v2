@@ -14,7 +14,12 @@ class PostoServicoController extends Controller
      */
     public function index()
     {
-        //
+        return view('posto-servico/home', ['postos' => PostoServico::paginate(5)]);
+    }
+
+    public function getPostoServico(Request $request,int $id)
+    {
+        return view('posto-servico/view', ['posto' => PostoServico::findOrFail($id)]);
     }
 
     /**
@@ -22,64 +27,36 @@ class PostoServicoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createNewPostoServico(Request $request)
     {
-        //
+        $posto = new PostoServico();
+
+        if($request->isMethod('post')){
+
+            $posto->fill($request->all());
+            $posto->save();
+
+            return redirect()->route('view-posto', ['id'=> $posto->id])
+                ->with('success','Posto de Serviço cadastrado com sucesso!');
+        }
+
+        return view('posto-servico/create', ['posto' => $posto]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function updatePostoServico(Request $request,int $id)
     {
-        //
-    }
+        $posto =  PostoServico::findOrFail($id);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PostoServico  $postoServico
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PostoServico $postoServico)
-    {
-        //
-    }
+        if($request->isMethod('put')){
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PostoServico  $postoServico
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PostoServico $postoServico)
-    {
-        //
-    }
+            $posto->nome = $request->input('nome');
+    
+            $posto->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PostoServico  $postoServico
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PostoServico $postoServico)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PostoServico  $postoServico
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(PostoServico $postoServico)
-    {
-        //
+            return redirect()->route('view-posto', ['id'=> $posto->id])
+                ->with('success','Posto de Serviço cadastrado com sucesso!');
+        }
+        
+        return view('posto-servico/edit', ['posto' => $posto]);
     }
 }
