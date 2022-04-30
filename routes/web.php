@@ -36,14 +36,8 @@ Route::middleware(['user.active'])->group(function () {
 	Route::get('/escala', [\App\Http\Controllers\EscalaController::class, 'index'])->name('home-sistema');
 	Route::post('/escala', [\App\Http\Controllers\EscalaController::class, 'index'])->name('home-sistema');
 
-	Route::get('/organizacao-militar/{organizacao}/secao', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'secao'])
-		->name('organizao-secao')
-		->withoutMiddleware('user.active');
-
-	Route::get('/impedimento', [\App\Http\Controllers\ImpedimentoController::class, 'index'])->name('militar-impedimento');
-
 	Route::prefix('private')->group(function () {
-		Route::get('files/{filename}',[\App\Http\Controllers\PrivateFilesController::class,'show'])->name('private-files');
+		Route::get('files/{folder}/{path}',[\App\Http\Controllers\PrivateFilesController::class,'show'])->name('private-files');
 	});
 
 	Route::get('/secao', [\App\Http\Controllers\SecaoController::class, 'index']);
@@ -68,11 +62,19 @@ Route::middleware(['user.active'])->group(function () {
     Route::get('/posto-servico/{id}', [\App\Http\Controllers\PostoServicoController::class, 'getPostoServico'])->name('view-posto');
 
     Route::get('/organizacao-militar', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'index']);
-    Route::get('/organizacao-militar/{organizacao}/secao', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'secao'])->name('organizao-secao')->withoutMiddleware('militar');
+    
+    Route::get('/organizacao-militar/{organizacao}/secao', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'secao'])
+        ->name('organizao-secao')
+        ->withoutMiddleware('user.active');
+    
     Route::get('/organizacao-militar/create', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'create'])->name('create-organizacao');
     Route::post('/organizacao-militar/create', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'create']);
     Route::get('/organizacao-militar/{id}/update', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'edit'])->name('update-organizacao');
     Route::put('/organizacao-militar/{id}/update', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'edit']);
     Route::get('/organizacao-militar/{id}', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'show'])->name('view-organizacao');
 
+	Route::get('/impedimento', [\App\Http\Controllers\ImpedimentoController::class, 'index'])->name('militar-impedimento');
+    Route::get('/impedimento/{militar_id}',[\App\Http\Controllers\ImpedimentoController::class, 'show'])->name('view-impedimento');
+    Route::get('/impedimento/militar/{militar_id}/create',[\App\Http\Controllers\ImpedimentoController::class, 'create'])->name('create-impedimento');
+    Route::post('/impedimento/militar/{militar_id}/create',[\App\Http\Controllers\ImpedimentoController::class, 'store']);
 });

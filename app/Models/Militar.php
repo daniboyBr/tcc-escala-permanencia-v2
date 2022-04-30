@@ -97,6 +97,11 @@ class Militar extends Authenticatable implements Auditable
 		return $this->hasOne(PostoGraduacao::class, 'id', 'postoGraduacao_id');
 	}
 
+	public function impedimentos()
+	{
+		return $this->hasMany(Impedimento::class, 'militar_id', 'id');
+	}
+
 	public static function boot()
 	{
 		parent::boot();
