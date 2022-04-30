@@ -14,28 +14,29 @@ class PostoGraduacaoController extends Controller
      */
     public function index()
     {
-        //
+        return view('posto-graduacao/home', ['postos' => PostoGraduacao::paginate(5)]);
     }
 
-    /**
+        /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
-    }
+        $posto = new PostoGraduacao();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        if($request->isMethod('post')){
+            $posto->fill($request->all());
+            $posto->save();
+
+            return redirect()->route('view-graduacao', ['id'=> $posto->id])
+            ->with('success','Posto de Gradução cadastrado com sucesso!');
+        }
+
+        return view('posto-graduacao/create', [
+            'posto' => $posto
+        ]);
     }
 
     /**
@@ -44,9 +45,10 @@ class PostoGraduacaoController extends Controller
      * @param  \App\Models\PostoGraduacao  $postoGraduacao
      * @return \Illuminate\Http\Response
      */
-    public function show(PostoGraduacao $postoGraduacao)
+    public function show($id)
     {
         //
+        return view('posto-graduacao/view', ['posto' => PostoGraduacao::findOrFail($id)]);
     }
 
     /**
@@ -55,31 +57,20 @@ class PostoGraduacaoController extends Controller
      * @param  \App\Models\PostoGraduacao  $postoGraduacao
      * @return \Illuminate\Http\Response
      */
-    public function edit(PostoGraduacao $postoGraduacao)
+    public function edit(Request $request,int $id)
     {
-        //
-    }
+        $posto = PostoGraduacao::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PostoGraduacao  $postoGraduacao
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PostoGraduacao $postoGraduacao)
-    {
-        //
-    }
+        if($request->isMethod('put')){
+            $posto->fill($request->all());
+            $posto->save();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PostoGraduacao  $postoGraduacao
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(PostoGraduacao $postoGraduacao)
-    {
-        //
+            return redirect()->route('view-graduacao', ['id'=> $posto->id])
+            ->with('success','Posto de Gradução atualizado com sucesso!');
+        }
+
+        return view('posto-graduacao/edit', [
+            'posto' => $posto
+        ]);
     }
 }

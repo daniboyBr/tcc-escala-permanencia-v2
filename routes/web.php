@@ -52,4 +52,11 @@ Route::middleware(['user.active'])->group(function () {
     Route::get('/secao/{id}/update', [\App\Http\Controllers\SecaoController::class, 'edit'])->name('update-secao');
     Route::put('/secao/{id}/update', [\App\Http\Controllers\SecaoController::class, 'edit']);
     Route::get('/secao/{id}', [\App\Http\Controllers\SecaoController::class, 'show'])->name('view-secao');
+
+	Route::get('/posto-graduacao', [\App\Http\Controllers\PostoGraduacaoController::class, 'index']);
+    Route::get('/posto-graduacao/create', [\App\Http\Controllers\PostoGraduacaoController::class, 'create'])->name('create-graduacao');
+    Route::post('/posto-graduacao/create', [\App\Http\Controllers\PostoGraduacaoController::class, 'create']);
+    Route::get('/posto-graduacao/{id}/update', [\App\Http\Controllers\PostoGraduacaoController::class, 'edit'])->name('update-graduacao');
+    Route::put('/posto-graduacao/{id}/update', [\App\Http\Controllers\PostoGraduacaoController::class, 'edit']);
+    Route::get('/posto-graduacao/{id}', [\App\Http\Controllers\PostoGraduacaoController::class, 'show'])->name('view-graduacao');
 });
