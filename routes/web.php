@@ -66,4 +66,13 @@ Route::middleware(['user.active'])->group(function () {
     Route::get('/posto-servico/{id}/update', [\App\Http\Controllers\PostoServicoController::class, 'updatePostoServico'])->name('update-posto');
     Route::put('/posto-servico/{id}/update', [\App\Http\Controllers\PostoServicoController::class, 'updatePostoServico']);
     Route::get('/posto-servico/{id}', [\App\Http\Controllers\PostoServicoController::class, 'getPostoServico'])->name('view-posto');
+
+    Route::get('/organizacao-militar', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'index']);
+    Route::get('/organizacao-militar/{organizacao}/secao', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'secao'])->name('organizao-secao')->withoutMiddleware('militar');
+    Route::get('/organizacao-militar/create', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'create'])->name('create-organizacao');
+    Route::post('/organizacao-militar/create', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'create']);
+    Route::get('/organizacao-militar/{id}/update', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'edit'])->name('update-organizacao');
+    Route::put('/organizacao-militar/{id}/update', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'edit']);
+    Route::get('/organizacao-militar/{id}', [\App\Http\Controllers\OrganizacaoMilitarController::class, 'show'])->name('view-organizacao');
+
 });

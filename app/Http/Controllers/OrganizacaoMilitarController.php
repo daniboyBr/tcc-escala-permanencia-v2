@@ -17,19 +17,32 @@ class OrganizacaoMilitarController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
-	{
-	}
+    public function index()
+    {
+        return view('organizacao-militar/home', ['organizacao' => OrganizacaoMilitar::paginate(5)]);
+    }
 
 	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
-	{
-	}
+    public function create(Request $request)
+    {
+        $organizacao = new OrganizacaoMilitar();
 
+        if($request->isMethod('post')){
+            $organizacao->fill($request->all());
+            $organizacao->save();
+
+            return redirect()->route('view-organizacao', ['id'=> $organizacao->id])
+            ->with('success','Organização de Militar cadastrado com sucesso!');
+        }
+
+        return view('organizacao-militar/create', [
+            'organizacao' => $organizacao
+        ]);
+    }
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -46,9 +59,11 @@ class OrganizacaoMilitarController extends Controller
 	 * @param  \App\Models\OrganizacaoMilitar  $organizacaoMilitar
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(OrganizacaoMilitar $organizacaoMilitar)
-	{
-	}
+    public function show(int $id)
+    {
+        //
+        return view('organizacao-militar/view', ['organizacao' => OrganizacaoMilitar::findOrFail($id)]);
+    }
 
 	/**
 	 * Show the form for editing the specified resource.
@@ -56,10 +71,22 @@ class OrganizacaoMilitarController extends Controller
 	 * @param  \App\Models\OrganizacaoMilitar  $organizacaoMilitar
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(OrganizacaoMilitar $organizacaoMilitar)
-	{
-	}
+    public function edit(Request $request,int $id)
+    {
+        $organizacao = OrganizacaoMilitar::findOrFail($id);
 
+        if($request->isMethod('put')){
+            $organizacao->fill($request->all());
+            $organizacao->save();
+
+            return redirect()->route('view-organizacao', ['id'=> $organizacao->id])
+            ->with('success','Onganização Militar atualizada com sucesso!');
+        }
+
+        return view('organizacao-militar/edit', [
+            'organizacao' => $organizacao
+        ]);
+    }
 	/**
 	 * Update the specified resource in storage.
 	 *
