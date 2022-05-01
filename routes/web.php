@@ -31,14 +31,17 @@ Route::get('envio-email', function(){
 Auth::routes();
 
 Route::middleware(['user.active'])->group(function () {
+
+	Route::prefix('private')->group(function () {
+		Route::get('files/{folder}/{path}',[\App\Http\Controllers\PrivateFilesController::class,'show'])->name('private-files');
+	});
+
 	Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->withoutMiddleware('user.active');
 	Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->withoutMiddleware('user.active');
 	Route::get('/escala', [\App\Http\Controllers\EscalaController::class, 'index'])->name('home-sistema');
 	Route::post('/escala', [\App\Http\Controllers\EscalaController::class, 'index'])->name('home-sistema');
 
-	Route::prefix('private')->group(function () {
-		Route::get('files/{folder}/{path}',[\App\Http\Controllers\PrivateFilesController::class,'show'])->name('private-files');
-	});
+
 
 	Route::get('/secao', [\App\Http\Controllers\SecaoController::class, 'index']);
     Route::get('/secao/create', [\App\Http\Controllers\SecaoController::class, 'create'])->name('create-secao');
@@ -77,4 +80,16 @@ Route::middleware(['user.active'])->group(function () {
     Route::get('/impedimento/{militar_id}',[\App\Http\Controllers\ImpedimentoController::class, 'show'])->name('view-impedimento');
     Route::get('/impedimento/militar/{militar_id}/create',[\App\Http\Controllers\ImpedimentoController::class, 'create'])->name('create-impedimento');
     Route::post('/impedimento/militar/{militar_id}/create',[\App\Http\Controllers\ImpedimentoController::class, 'store']);
+
+    Route::get('/militar/new-user/', [\App\Http\Controllers\MilitarController::class, 'createNewUserWithMilitar'])->name('create-militar-new');
+    Route::post('/militar/new-user/', [\App\Http\Controllers\MilitarController::class, 'createNewUserWithMilitar'])->name('create-militar-new');
+    Route::post('/militar/liberar/', [\App\Http\Controllers\MilitarController::class, 'liberarUsuario'])->name('militar-liberar');
+    Route::post('/militar/perfil/', [\App\Http\Controllers\MilitarController::class, 'liberarUsuarioComoAdmin'])->name('militar-perfil');
+    Route::get('/militar/', [\App\Http\Controllers\MilitarController::class, 'index'])->name('militar-list');
+
+    Route::get('/militar/create', [\App\Http\Controllers\MilitarController::class, 'create'])->name('create-militar')->withoutMiddleware('militar');
+    Route::post('/militar/create', [\App\Http\Controllers\MilitarController::class, 'store'])->name('store-militar')->withoutMiddleware('militar');
+    Route::get('/militar/{id}/update', [\App\Http\Controllers\MilitarController::class, 'edit'])->name('update-militar');
+    Route::post('/militar/{id}/update', [\App\Http\Controllers\MilitarController::class, 'update'])->name('update-militar');
+
 });
