@@ -31,12 +31,12 @@
                         <tbody>
                             @foreach ($militar as $m)
                                 <tr>
-                                    <td>{{$m->nome}}</td>
+                                    <td>{{$m->name}}</td>
                                     <td>{{$m->nomeGuerra}}</td>
                                     <td>{{$m->organizacao->nome}}</td>
                                     <td>{{$m->email}}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('update-graduacao', ['id' => $m->id]) }}" class="text-warning" title="Editar">
+                                        <a href="{{ route('update-militar', ['id' => $m->id]) }}" class="text-warning" title="Editar">
                                             <i class="material-icons">edit</i>
                                         </a>
                                     </td>

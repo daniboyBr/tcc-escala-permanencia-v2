@@ -11,18 +11,28 @@
     <label for="bmd-label-floating">Nome de Guerra:</label>
     <input type="text" class="form-control" name="nomeGuerra" value="{{$militar->nomeGuerra}}"> 
 </div>
+
 <div class="form-group">
     <label for="bmd-label-floating">E-mail:</label>
-    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$militar->email}}"> 
+    @if(request()->route()->named('update-militar'))
+        <input type="email" class="form-control" disabled value="{{$militar->email}}"> 
+    @else   
+        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$militar->email}}"> 
+    @endif
     @error('email')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
     @enderror
 </div>
+
 <div class="form-group">
     <label for="bmd-label-floating">Senha:</label>
-    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{$militar->password}}"> 
+    @if(request()->route()->named('update-militar'))
+        <input type="password" class="form-control" name="password" value="{{$militar->password}}"> 
+    @else   
+        <input type="password" class="form-control @error('password') is-invalid @enderror" required name="password" value="{{$militar->password}}"> 
+    @endif
     @error('password')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -31,7 +41,11 @@
 </div>
 <div class="form-group">
     <label for="bmd-label-floating">Confirme a Senha:</label>
-    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+    @if(request()->route()->named('update-militar'))
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+    @else   
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+    @endif
 </div>
 <div class="form-group">
     <label for="bmd-label-floating">Ramal:</label>

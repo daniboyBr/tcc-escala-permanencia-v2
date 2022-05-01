@@ -20,7 +20,10 @@ class MilitarController extends Controller
      */
     public function index()
     {
-        $militar = Militar::with(['organizacao:id,nome'])->paginate(5);
+        $militar = Militar::with(['organizacao:id,nome'])
+            ->where('email','!=','sistema@permanencia.com')
+            ->paginate(5);
+
         return view('militar/index',[
             'militar'=> $militar
         ]);
@@ -69,6 +72,10 @@ class MilitarController extends Controller
         $request->merge(['telefoneResidencial' => preg_replace('/[^0-9]/','',$request->get('telefoneResidencial',''))]);
         $request->merge(['telefoneCelular' => preg_replace('/[^0-9]/','',$request->get('telefoneCelular',''))]);
 
+        if($request->has('password')){
+            $request->merge(['password'=> Hash::make($request->get('password')) ]);
+        }
+
         $militar->fill($request->all());
 
         if(!$militar->save()){
@@ -89,22 +96,23 @@ class MilitarController extends Controller
      */
     public function edit(int $id)
     {
-        if(Auth::user()->militar_id != $id){
-            abort(404);
+        if((int)Auth::user()->isAdmin || Auth::user()->id == $id){
+            $militar = Militar::findOrFail($id);
+            $militar->password = '';
+
+            return view('militar/create', [
+                'militar' => $militar,
+                'secao' => Secao::all(),
+                'organizacao'=> OrganizacaoMilitar::all(['nome','id']),
+                'graduacao' => PostoGraduacao::all('nome','id')
+            ]);
         }
 
-        $militar = Militar::findOrFail($id);
-
-        return view('militar/create', [
-            'militar' => $militar,
-            'secao' => Secao::all(),
-            'organizacao'=> OrganizacaoMilitar::all(['nome','id']),
-            'graduacao' => PostoGraduacao::all('nome','id')
-        ]);
+        abort(404);
     }
 
 
-        /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -113,30 +121,46 @@ class MilitarController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        if(Auth::user()->militar_id != $id){
-            abort(404);
-        }
+        if((int)Auth::user()->isAdmin || Auth::user()->id == $id){
+            
+            if($request->filled('password')){
+                $request->validate([
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                ]);
 
-        $militar = Militar::findOrFail($id);
-
-        if($request->hasFile('imagem')){
-            $path = $request->imagem->store('militar');
-            $request = new Request($request->except('imagem'));
-            $request->merge(['imagem' => $path]);
-
-            if($militar->imagem){
-                Storage::delete($militar->imagem);
+                $request->merge(['password'=> Hash::make($request->get('password')) ]);
             }
+
+            $militar = Militar::findOrFail($id);
+
+            if($request->hasFile('imagem')){
+                $path = $request->imagem->store('militar');
+                $request = new Request($request->except('imagem'));
+                $request->merge(['imagem' => $path]);
+    
+                if($militar->imagem){
+                    Storage::delete($militar->imagem);
+                }
+            }
+    
+            $request->merge(['telefoneResidencial' => preg_replace('/[^0-9]/','',$request->get('telefoneResidencial',''))]);
+            $request->merge(['telefoneCelular' => preg_replace('/[^0-9]/','',$request->get('telefoneCelular',''))]);
+
+            $militar->fill(array_filter($request->all()));
+
+            if(!$militar->save()){
+                return redirect()->back()->with('error','Não foi possivel salvar o militar.');
+            }
+    
+            if(Auth::user()->isAdmin){
+                return redirect()->route('militar-list')->with('success','Militar atualizado com sucesso!');
+            }
+
+            return redirect()->route('update-militar', ['id'=> $militar->id])
+                ->with('success','Militar atualizado com sucesso!');
         }
 
-        $request->merge(['telefoneResidencial' => preg_replace('/[^0-9]/','',$request->get('telefoneResidencial',''))]);
-        $request->merge(['telefoneCelular' => preg_replace('/[^0-9]/','',$request->get('telefoneCelular',''))]);
-
-        $militar->fill($request->all());
-        $militar->save();
-
-        return redirect()->route('update-militar', ['id'=> $militar->id])
-            ->with('success','Militar atualizado com sucesso!');
+        abort(404);
     }
 
     public function liberarUsuario(Request $request)
@@ -162,7 +186,6 @@ class MilitarController extends Controller
 
     }
 
-    
     public function liberarUsuarioComoAdmin(Request $request)
     {
         $response = [];

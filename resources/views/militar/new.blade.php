@@ -74,7 +74,7 @@ width: 150px;
                         <label class="label">
                             <input type="file" id="UploadedFile" name="imagem"/>
                             <figure class="personal-figure">
-                                <img  id="preview-img" src="{{$militar->imagem? asset('storage/'.$militar->imagem) : asset('img/user.png')}}" class="personal-avatar" alt="avatar">
+                                <img  id="preview-img" src="{{$militar->imagem? url('private/files/'.$militar->imagem) : asset('img/user.png')}}" class="personal-avatar" alt="avatar">
                                 <figcaption class="personal-figcaption">
                                     <img src="{{asset('img/camera-white.png')}}">
                                 </figcaption>

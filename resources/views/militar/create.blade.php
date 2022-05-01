@@ -2,52 +2,58 @@
 
 @section('css')
 <style>
-    .preview
-{
-    padding: 10px;
-    position: relative;
+.avatar-pic {
+width: 150px;
 }
 
-.preview i
-{
-    color: white;
-    font-size: 35px;
-    transform: translate(50px,130px);
+.personal-image {
+  text-align: center;
+}
+.personal-image input[type="file"] {
+  display: none;
 }
 
-.preview-img
-{
-    border-radius: 100%;
-    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.7);
+.personal-figure {
+  position: relative;
+  width: 120px;
+  height: 120px;
 }
 
-.browse-button
-{
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
-    position: absolute; /* Tweak the position property if the element seems to be unfit */
-    top: 10px;
-    left: 132px;
-    background: linear-gradient(180deg, transparent, black);
-    opacity: 0;
-    transition: 0.3s ease;
+.personal-avatar {
+  cursor: pointer;
+  width: inherit;
+  height: inherit;
+  box-sizing: border-box;
+  border-radius: 100%;
+  border: 2px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  transition: all ease-in-out .3s;
+}
+.personal-avatar:hover {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
-.browse-button:hover
-{
-    opacity: 1;
-}
 
-.browse-input
-{
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
-    transform: translate(-1px,-26px);
-    opacity: 0;
+.personal-figcaption {
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  width: inherit;
+  height: inherit;
+  border-radius: 100%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0);
+  transition: all ease-in-out .3s;
 }
-
+.personal-figcaption:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, .5);
+}
+.personal-figcaption > img {
+  margin-top: 32.5px;
+  width: 50px;
+  height: 50px;
+}
 </style>
 @endsection
 
@@ -64,13 +70,17 @@
                 <form action="{{url()->current()}}" method="post" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="preview text-center">
-                        <img id="preview-img" class="preview-img" src="{{$militar->imagem? asset('storage/'.$militar->imagem) : asset('img/user.png')}}" alt="Preview Image" width="200" height="200"/>
-                        <div class="browse-button">
-                            <i class="material-icons">edit</i>
-                            <input class="browse-input" type="file" name="imagem" id="UploadedFile"/>
-                        </div>
-                        <span class="Error"></span>
+                    <div class="personal-image">
+                        <label class="label">
+                            <input type="file" id="UploadedFile" name="imagem"/>
+                            <figure class="personal-figure">
+                                <img  id="preview-img" src="{{$militar->imagem? url('private/files/'.$militar->imagem) : asset('img/user.png')}}" class="personal-avatar" alt="avatar">
+                                <figcaption class="personal-figcaption">
+                                    <img src="{{asset('img/camera-white.png')}}">
+                                </figcaption>
+                            </figure>
+                            <span class="Error"></span>
+                        </label>
                     </div>
                                         
                     @include('militar.form')
