@@ -40,10 +40,18 @@ RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
+COPY ./php/tasks.sh /usr/local/bin/tasks.sh
+
+RUN chown $user:$user /usr/local/bin/tasks.sh
+
+RUN chmod +x /usr/local/bin/tasks.sh
+
 # Set working directory
 WORKDIR /var/www
 
 USER $user
+
+ENTRYPOINT  ["/usr/local/bin/tasks.sh"]
 
 
 #      XDEBUG_CONFIG: "mode=debug start_with_request=yes client_host=host.docker.internal"
