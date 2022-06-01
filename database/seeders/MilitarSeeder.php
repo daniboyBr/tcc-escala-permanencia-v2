@@ -17,9 +17,15 @@ class MilitarSeeder extends Seeder
 
 	private function setDependences()
 	{
-		$this->om = OrganizacaoMilitar::where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
-		$this->secao = $this->om->secao()->where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
-		$this->postoGraduacao = PostoGraduacao::where('flgAtivo', 1)->inRandomOrder()->limit(1)->first();
+		$this->om = OrganizacaoMilitar::where('flgAtivo', 1)
+			->whereHas('secao', function($q) {
+				$q->whereNotNull('id');
+				$q->where('flgAtivo',1);
+			})
+			->inRandomOrder()
+			->first();
+		$this->secao = $this->om->secao()->where('flgAtivo', 1)->inRandomOrder()->first();
+		$this->postoGraduacao = PostoGraduacao::where('flgAtivo', 1)->inRandomOrder()->first();
 	}
 
 	/**
@@ -77,5 +83,7 @@ class MilitarSeeder extends Seeder
 				'password' => Hash::make(Str::random(10))
 			]);
 		}
+
+		\App\Models\Militar::factory(10)->create();
 	}
 }

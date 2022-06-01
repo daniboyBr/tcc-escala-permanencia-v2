@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Storage;
 
 class MilitarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->only(['liberarUsuario','liberarUsuarioComoAdmin','destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      *

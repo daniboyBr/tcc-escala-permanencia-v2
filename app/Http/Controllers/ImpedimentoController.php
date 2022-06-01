@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ImpedimentoController extends Controller
 {
+    public function __construct()
+	{
+		$this->middleware('admin')->only(['create', 'edit', 'update', 'destroy']);
+	}
     /**
      * Display a listing of the resource.
      *

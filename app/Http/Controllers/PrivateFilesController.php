@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Response;
 
 class PrivateFilesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->only(['create','edit','update','destroy']);
+    }
+
     public function show($folder, $file)
     {
         if(!Auth::check()){
