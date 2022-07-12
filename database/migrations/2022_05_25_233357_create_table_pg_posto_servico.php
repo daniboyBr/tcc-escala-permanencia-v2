@@ -37,6 +37,13 @@ class CreateTablePgPostoServico extends Migration
      */
     public function down()
     {
+        Schema::table('pgPostoServico', function (Blueprint $table) {
+			$table->dropForeign(['postoGraduacao_id']);
+			$table->dropForeign(['postoServico_id']);
+			$table->dropForeign(['id_inseridoPor']);
+			$table->dropForeign(['id_atualizadoPor']);
+		});
+
         Schema::dropIfExists('pgPostoServico');
     }
 }

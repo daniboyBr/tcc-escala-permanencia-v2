@@ -15,6 +15,7 @@ class CreateImpedimentosTable extends Migration
 	{
         Schema::create('impedimento', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tipoImpedimento_id');
             $table->unsignedBigInteger('militar_id');
             $table->date('dataInicio');
             $table->date('dataFinal');
@@ -25,6 +26,7 @@ class CreateImpedimentosTable extends Migration
         });
 
         Schema::table('impedimento', function (Blueprint $table) {
+            $table->foreign('tipoImpedimento_id')->references('id')->on('tipoImpedimento')->onDelete('NO ACTION')->onUpdate('NO ACTION');
             $table->foreign('militar_id')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 			$table->foreign('id_inseridoPor')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 			$table->foreign('id_atualizadoPor')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
@@ -39,9 +41,10 @@ class CreateImpedimentosTable extends Migration
 	public function down()
 	{
 		Schema::table('impedimento', function (Blueprint $table) {
+			$table->dropForeign(['militar_id']);
+			$table->dropForeign(['tipoImpedimento_id']);
 			$table->dropForeign(['id_inseridoPor']);
 			$table->dropForeign(['id_atualizadoPor']);
-			$table->dropForeign(['militar_id']);
 		});
 		
 		Schema::dropIfExists('impedimento');

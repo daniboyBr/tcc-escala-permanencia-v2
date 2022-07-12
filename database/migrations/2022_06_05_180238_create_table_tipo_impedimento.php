@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoImpedimentosTable extends Migration
+class CreateTableTipoImpedimento extends Migration
 {
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-        Schema::create('tipoImpedimento', function (Blueprint $table) {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('tipoImpedimneto', function (Blueprint $table) {
             $table->id();
             $table->string('nome',100);
             $table->boolean('flgAtivo')->default(1);
@@ -22,24 +22,19 @@ class CreateTipoImpedimentosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('tipoImpedimento', function (Blueprint $table) {
+        Schema::table('escala', function (Blueprint $table) {
 			$table->foreign('id_inseridoPor')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 			$table->foreign('id_atualizadoPor')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 		});
-	}
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::table('tipoImpedimento', function (Blueprint $table) {
-            $table->dropForeign(['id_inseridoPor']);
-            $table->dropForeign(['id_atualizadoPor']);
-        });
-
-		Schema::dropIfExists('tipoImpedimento');
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('tipoImpedimneto');
+    }
 }

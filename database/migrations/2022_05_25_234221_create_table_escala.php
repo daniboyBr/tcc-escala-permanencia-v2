@@ -15,7 +15,7 @@ class CreateTableEscala extends Migration
     {
         Schema::create('escala', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pgPostoServico_id');
+            $table->unsignedBigInteger('postoServico_id');
             $table->unsignedBigInteger('militar_id');
             $table->unsignedBigInteger('militarTroca_id')->nullable();
             $table->unsignedBigInteger('id_inseridoPor')->nullable();
@@ -37,7 +37,7 @@ class CreateTableEscala extends Migration
 
         Schema::table('escala', function (Blueprint $table) {
             $table->foreign('militar_id')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
-            $table->foreign('pgPostoServico_id')->references('id')->on('pgPostoServico')->onDelete('NO ACTION')->onUpdate('NO ACTION');
+            $table->foreign('postoServico_id')->references('id')->on('postoServico')->onDelete('NO ACTION')->onUpdate('NO ACTION');
             $table->foreign('militarTroca_id')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 			$table->foreign('id_inseridoPor')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
 			$table->foreign('id_atualizadoPor')->references('id')->on('militar')->onDelete('NO ACTION')->onUpdate('NO ACTION');
@@ -50,7 +50,15 @@ class CreateTableEscala extends Migration
      * @return void
      */
     public function down()
-    {
-        Schema::dropIfExists('table_escala');
+    {   
+        Schema::table('escala', function (Blueprint $table) {
+            $table->dropForeign(['militar_id']);
+            $table->dropForeign(['postoServico_id']);
+            $table->dropForeign(['militarTroca_id']);
+            $table->dropForeign(['id_inseridoPor']);
+            $table->dropForeign(['id_atualizadoPor']);
+        });
+
+        Schema::dropIfExists('escala');
     }
 }

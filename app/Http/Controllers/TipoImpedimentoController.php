@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class TipoImpedimentoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->only(['create','edit','update','destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,9 @@ class TipoImpedimentoController extends Controller
      */
     public function index()
     {
-        //
+        return view('tipo-impedimento/home', [
+            'tipos' => TipoImpedimento::paginate(5)
+        ]);
     }
 
     /**
@@ -22,9 +29,22 @@ class TipoImpedimentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $tipoImpedimento = new TipoImpedimento();
+
+        if($request->isMethod('post')){
+            
+            $tipoImpedimento->fill($request->all());
+            $tipoImpedimento->save();
+
+            return redirect()->route('view-tipo-impedimento', ['id'=> $tipoImpedimento->id])
+            ->with('success','Tipo de Impedimento cadastrado com sucesso!');
+        }
+
+        return view('tipo-impedimento/create',[
+            'tipo' => $tipoImpedimento
+        ]);
     }
 
     /**
@@ -41,12 +61,12 @@ class TipoImpedimentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TipoImpedimento  $tipoImpedimento
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoImpedimento $tipoImpedimento)
+    public function show(int $id)
     {
-        //
+        return view('tipo-impedimento/view', ['tipo' => TipoImpedimento::findOrFail($id)]);
     }
 
     /**
@@ -67,7 +87,7 @@ class TipoImpedimentoController extends Controller
      * @param  \App\Models\TipoImpedimento  $tipoImpedimento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoImpedimento $tipoImpedimento)
+    public function update(Request $request, int $id)
     {
         //
     }
