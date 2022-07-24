@@ -22,6 +22,6 @@ class Impedimento extends MainModel
 
     public function tipoImpedimento()
     {
-        return $this->belongsTo(TipoImpedimento::class, 'id', 'tipoImpedimento_id');
+        return $this->belongsTo(TipoImpedimento::class, 'tipoImpedimento_id', 'id');
     }
 }

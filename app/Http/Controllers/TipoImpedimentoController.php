@@ -75,9 +75,22 @@ class TipoImpedimentoController extends Controller
      * @param  \App\Models\TipoImpedimento  $tipoImpedimento
      * @return \Illuminate\Http\Response
      */
-    public function edit(TipoImpedimento $tipoImpedimento)
+    public function edit(Request $request, $id)
     {
-        //
+        $tipo =  TipoImpedimento::findOrFail($id);
+
+        if($request->isMethod('put')){
+            $tipo->fill($request->all());
+            $tipo->save();
+
+            return redirect()->route('view-tipo-impedimento', ['id'=> $tipo->id])
+            ->with('success','Tipo de Impedimento atualizado com sucesso!');
+        }
+
+
+        return view('tipo-impedimento/edit', [
+            'tipo' => $tipo,
+        ]);
     }
 
     /**

@@ -15,6 +15,8 @@ class PostoGraduacaoPostoServico extends MainModel
 
     protected $table = self::TABLE;
 
+    protected $fillable = [self::POSTO_GRADUACAO_ID, self::POSTO_SERVICO_ID];
+
     public function postoGraducao()
     {
         return $this->belongsTo(PostoGraduacao::class, self::POSTO_GRADUACAO_ID, PostoGraduacao::PRIMARY_KEY);

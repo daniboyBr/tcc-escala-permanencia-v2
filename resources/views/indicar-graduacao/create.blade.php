@@ -24,3 +24,38 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script>
+    $('#postoServico-id').on('change', function() {
+        let select = document.querySelector('#postoServico-id')
+        var option = select.options[select.selectedIndex].value
+        
+        if(!option){ return }
+
+        fetch(`/indicar-graduacao/servico/${option}`)
+        .then((data) =>{ return data.json() })
+        .then((data) => {
+            console.log(data);
+            $('#postoGraduaco-id option').each(function() {
+                if ($(this).val() == '' ) {
+                    return;
+                }
+                $(this).remove();
+            });
+
+            if(data){
+                data.graduacoes.forEach(element => {
+                    let newOption = $('<option>').val(element.id).text(element.nome).appendTo('#postoGraduaco-id');
+                    var secaoSected = $('#postoGraduaco-id ').val();
+                    if(secaoSected && element.id == secaoSected){
+                        $(newOption).attr('selected', true);
+                    }
+                });
+            }
+        });
+    }).change();
+
+</script>
+@endsection
+

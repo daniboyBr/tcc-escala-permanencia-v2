@@ -27,7 +27,7 @@
 @section('scripts')
 
 <script>
-    $('#tipo-fields :input').attr('disabled', true);
+    $('#tipo-fields :input').not('.close').attr('disabled', true);
 </script>
 
 @endsection

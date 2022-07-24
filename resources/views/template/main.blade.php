@@ -61,8 +61,8 @@
               @csrf
           </form>
       </div>
-      <div class="sidebar-wrapper">
-        <ul class="nav">
+      <div class="sidebar-wrapper" >
+        <ul class="nav  overflow-auto vh-100">
           <li class="nav-item">
             <a class="nav-link" href="{{url('/escala')}}">
               <i class="material-icons">today</i>
@@ -129,7 +129,6 @@
           </li>
         </ul>
       </div>
-      
     </div>
     <div class="main-panel" id="main-panel" style="width: 1050px;">
       <!-- Navbar -->
@@ -153,6 +152,7 @@
   <!-- <script src="{{asset('js/material-dashboard.min.js')}}"></script> -->
   <script src="{{asset('js/dashboard.js?v=2.1.2')}}"></script>
   <script>
+
       $('#change-sidebar').on('click', function (){
         let check = $('#main-nav').hasClass('main-nav');
         if(check){

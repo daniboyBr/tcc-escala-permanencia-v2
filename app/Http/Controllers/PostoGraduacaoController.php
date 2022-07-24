@@ -94,9 +94,7 @@ class PostoGraduacaoController extends Controller
         $pgPostoServico = PostoGraduacaoPostoServico::findOrFail($id);
 
         return view('indicar-graduacao/view', [
-            'graduacao' => PostoGraduacao::where('flgAtivo',1)->get(),
-            'servicos' => PostoServico::where('flgAtivo',1)->get(),
-            'pgPostoServico' => $pgPostoServico
+            'posto' => $pgPostoServico
         ]);
     }
 
@@ -126,7 +124,7 @@ class PostoGraduacaoController extends Controller
             }
 
             return redirect()->route('graduacao-servico', ['id'=> $pgPostoServico->id])
-                ->with('error','Indicação realizada com sucesso.');
+                ->with('error','Indicação não pode ser concluída.');
         }
 
 
@@ -135,5 +133,16 @@ class PostoGraduacaoController extends Controller
             'servicos' => PostoServico::where('flgAtivo',1)->get(),
             'pgPostoServico' => new PostoGraduacaoPostoServico()
         ]);
+    }
+
+    public function graduacoes($id) {
+
+        $created = PostoGraduacaoPostoServico::select('postoGraduacao_id')->where('postoServico_id', $id)->get();
+
+        $graduacoes = PostoGraduacao::whereNotIn('id', $created->all())->get();
+
+        return [
+            'graduacoes' => $graduacoes
+        ];
     }
 }

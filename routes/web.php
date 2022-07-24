@@ -55,7 +55,8 @@ Route::middleware(['user.active'])->group(function () {
     Route::put('/posto-graduacao/{id}/update', [\App\Http\Controllers\PostoGraduacaoController::class, 'edit']);
     Route::get('/posto-graduacao/{id}', [\App\Http\Controllers\PostoGraduacaoController::class, 'show'])->name('view-graduacao');
     
-    Route::get('/indicar-graduacao/{id}', [\App\Http\Controllers\PostoGraduacaoController::class, 'viewPgPostoServico'])->name('view-graduacao-servico');
+    Route::get('/indicar-graduacao/view/{id}', [\App\Http\Controllers\PostoGraduacaoController::class, 'viewPgPostoServico'])->name('view-graduacao-servico');
+    Route::get('/indicar-graduacao/servico/{id}', [\App\Http\Controllers\PostoGraduacaoController::class, 'graduacoes']);
     Route::get('/indicar-graduacao', [\App\Http\Controllers\PostoGraduacaoController::class, 'postoServico'])->name('graduacao-servico');
     Route::post('/indicar-graduacao', [\App\Http\Controllers\PostoGraduacaoController::class, 'postoServico']);
 

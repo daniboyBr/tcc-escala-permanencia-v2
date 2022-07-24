@@ -16,7 +16,7 @@
 
                     <button type="submit" class="btn btn-sm btn-block btn-success">SALVAR</button>
 
-                    <a href="{{route('view-tipo-impediemnto', ['id'=> $tipo->id])}}" class="btn btn-sm btn-danger btn-block">CANCELAR</a>
+                    <a href="{{route('view-tipo-impedimento', ['id'=> $tipo->id])}}" class="btn btn-sm btn-danger btn-block">CANCELAR</a>
                 </form>
             </div>
         </div>

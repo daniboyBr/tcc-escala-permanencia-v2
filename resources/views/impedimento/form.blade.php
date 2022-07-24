@@ -1,9 +1,17 @@
 <div class="form-group">
     <label for="form-label">Militar:</label>
     <input type="hidden" name="militar_id" value="{{$impedimento->militar_id}}">
-    <input disabled type="text" class="form-control form-control-sm" value="{{$militar->nome}}">
+    <input disabled type="text" class="form-control form-control-sm" value="{{$militar->name}}">
 </div>
-
+<div class="form-group">
+    <label for="bmd-label-floating">Tipo de Impedimento:</label>
+    <select required name="tipoImpedimento_id" id="organizacao-militar" class="custom-select">
+        <option value="">-- Selecione --</option>
+        @foreach($tipos as $t)
+            <option value="{{$t->id}}"  {{$impedimento->tipoImpedimento_id == $t->id? 'selected':''}}>{{$t->nome}}</option>
+        @endforeach
+    </select>
+</div>
 <div class="form-group">
     <label for="form-label">Data Incío:</label>
     <input required type="date" class="form-control form-control-sm" id="dataInicio" name="dataInicio" value="{{$impedimento->dataInicio}}">

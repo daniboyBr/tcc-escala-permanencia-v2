@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Militar;
 use App\Models\Impedimento;
+use App\Models\TipoImpedimento;
 use Illuminate\Http\Request;
 
 class ImpedimentoController extends Controller
@@ -35,10 +36,12 @@ class ImpedimentoController extends Controller
         $militar = Militar::findOrFail($militar_id);
         $impedimento = new Impedimento();
         $impedimento->militar_id = $militar->id;
+        $tipos = TipoImpedimento::where('flgAtivo', 1)->get();
 
         return view('impedimento/create', [
             'militar' => $militar,
-            'impedimento' => $impedimento
+            'impedimento' => $impedimento,
+            'tipos' => $tipos
         ]);
     }
 
@@ -56,6 +59,7 @@ class ImpedimentoController extends Controller
         }
 
         $request->validate([
+            'tipoImpedimento_id' => 'required|exists:tipoImpedimento,id',
             'militar_id' => 'required|exists:militar,id',
             'dataInicio' => 'required|date_format:Y-m-d|after_or_equal:today',
             'dataFinal' => 'required|date_format:Y-m-d|after_or_equal:dataInicio',

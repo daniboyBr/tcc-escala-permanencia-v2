@@ -31,7 +31,7 @@
 @section('scripts')
 
 <script>
-    $('#posto-fields :input').attr('disabled', true);
+    $('#posto-fields :input').not('.close').attr('disabled', true);
 </script>
 
 @endsection

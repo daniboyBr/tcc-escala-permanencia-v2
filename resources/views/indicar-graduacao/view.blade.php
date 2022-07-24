@@ -10,15 +10,18 @@
             <div class="card-body" id="posto-fields">
                 @include('template.messages')
 
-                @include('indicar-graduacao.form')
-
-                @if (auth()->check())
-                    @if (auth()->user()->isAdmin)
-                        <a class="btn btn-sm btn-primary float-right" href="{{route('update-organizacao',['id'=>$pgPostoServico->id])}}">
-                            <i class="material-icons">edit</i> Editar
-                        </a>
-                    @endif
-                @endif
+                <div class="form-group">
+                    <label for="bmd-label-floating">Posto de Serviço:</label>
+                    <select required name="postoServico_id" id="postoServico-id" class="select-posto custom-select" disabled>
+                        <option value="{{$posto->postoGraduacao_id}}" selected>{{$posto->postoServico->nome}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bmd-label-floating">Posto de Graduação:</label>
+                    <select required name="postoGraduacao_id" id="postoGraduaco-id" class="select-posto custom-select" disabled>
+                        <option value="{{$posto->postoServico_id}}" selected>{{$posto->postoGraducao->nome}}</option>
+                    </select>
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>

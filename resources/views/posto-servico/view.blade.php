@@ -17,6 +17,21 @@
                         </a>
                     @endif
                 @endif
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Graduação Cadastradas</th>
+                            </tr>
+                        <thead>
+                        <tbody>
+                            @foreach ($posto->postoGraduacao as $p)
+                            <tr>
+                                <td>{{$p->nome}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>
@@ -27,7 +42,7 @@
 @section('scripts')
 
 <script>
-    $('#posto-fields :input').attr('disabled', true);
+    $('#posto-fields :input').not('.close').attr('disabled', true);
 </script>
 
 @endsection

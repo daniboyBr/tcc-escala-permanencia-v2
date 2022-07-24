@@ -14,6 +14,7 @@
                     <table class="table table-hover text-center">
                         <thead>
                             <tr>
+                                <th>Tipo Impedimento</th>
                                 <th>Início do Impedimento</th>
                                 <th>Fim do Impedimento</th>
                                 <th>Documento Anexado</th>
@@ -22,6 +23,7 @@
                         <tbody>
                             @foreach ($militar->impedimentos as $i)
                                 <tr>
+                                    <td>{{$i->tipoImpedimento->nome}}</td>
                                     <td>{{$i->dataInicio->format('d/m/Y')}}</td>
                                     <td>{{$i->dataFinal->format('d/m/Y')}}</td>
                                     <td>
