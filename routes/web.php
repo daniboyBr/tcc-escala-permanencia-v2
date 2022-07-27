@@ -102,4 +102,6 @@ Route::middleware(['user.active'])->group(function () {
     Route::get('/militar/{id}/update', [\App\Http\Controllers\MilitarController::class, 'edit'])->name('update-militar');
     Route::post('/militar/{id}/update', [\App\Http\Controllers\MilitarController::class, 'update']);
 
+    Route::get('/escala/generate', [\App\Http\Controllers\EscalaController::class, 'generateEscala']);
+
 });

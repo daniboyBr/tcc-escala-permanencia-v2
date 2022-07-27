@@ -14,6 +14,24 @@ class Escala extends MainModel
 
     protected $dates = ['data'];
 
+    protected $fillable = [
+        'postoServico_id',
+        'militar_id',
+        'militarTroca_id',
+        'data',
+        'livroPermanencia',
+        'emailEnviado',
+        'telegramEnviado',
+        'FlgCiente',
+        'dtFlgCiente',
+        'dtFlgCienteTroca',
+        'tokenCiente',
+        'tokenCienteTroca',
+        'observacao',
+        'observacaoTroca',
+        'uuidEscala'
+    ];
+
     public function militar()
     {
         return $this->belongsTo(Militar::class, 'militar_id', 'id');

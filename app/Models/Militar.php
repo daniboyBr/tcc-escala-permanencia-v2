@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Escala;
+use App\Models\Impedimento;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use OwenIt\Auditing\Contracts\Auditable;
 
 class Militar extends Authenticatable implements Auditable
 {	        
@@ -33,7 +35,7 @@ class Militar extends Authenticatable implements Auditable
 		'ramal',
 		'telefoneResidencial',
 		'telefoneCelular',
-		'flAtivo',
+		'flgAtivo',
 		'inseridoPor',
 		'atualizadoPor',
 		'organizacaoMilitar_id',
@@ -55,7 +57,7 @@ class Militar extends Authenticatable implements Auditable
 		'ramal',
 		'telefoneResidencial',
 		'telefoneCelular',
-		'flAtivo',
+		'flgAtivo',
 		'inseridoPor',
 		'atualizadoPor',
 		'organizacaoMilitar_id',
@@ -117,5 +119,9 @@ class Militar extends Authenticatable implements Auditable
 		self::deleting(function ($model) {
 			$model->id_atualizadoPor = Auth::user()->id ?? Militar::find(2)->id;
 		});
+	}
+
+	public function escala(){
+		$this->belongsTo(Escala::class, 'id', 'militar_id');
 	}
 }

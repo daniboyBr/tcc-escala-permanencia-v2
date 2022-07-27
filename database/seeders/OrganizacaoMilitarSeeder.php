@@ -22,5 +22,43 @@ class OrganizacaoMilitarSeeder extends Seeder
 				return ['organizacaoMilitar_id' => $organizacaoMilitar->id];
 			})
 			->create();
+
+		$oms = [
+			'11º CGCFEx',
+			'B Adm QGEx',
+			'CCIEx',
+			'CDS',
+			'COEx',
+			'CPEx',
+			'COTER',
+			'COLOG',
+			'DCT',
+			'DEC',
+			'DGP',
+			'DAbst',
+			'DAProm',
+			'DCIPAS',
+			'DCont',
+			'DCEM',
+			'DFPC',
+			'DGO',
+			'DMat',
+			'DMAvEx',
+			'D M E',
+			'DOC',
+			'DOM',
+			'DPIMA',
+			'DPGO',
+			'DPE',
+			'DSau',
+			'DSM',
+			'DSMEM',
+			'DSG',
+			'EME',
+			'Graf Ex',
+			'IEFEX',
+			'SEF',
+			'SGE'
+		];
 	}
 }

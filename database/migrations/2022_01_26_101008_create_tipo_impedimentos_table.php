@@ -15,7 +15,7 @@ class CreateTipoImpedimentosTable extends Migration
 	{
         Schema::create('tipoImpedimento', function (Blueprint $table) {
             $table->id();
-            $table->string('nome',100);
+            $table->string('nome',255);
             $table->boolean('flgAtivo')->default(1);
             $table->unsignedBigInteger('id_inseridoPor')->nullable();
 			$table->unsignedBigInteger('id_atualizadoPor')->nullable();

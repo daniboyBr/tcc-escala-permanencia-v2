@@ -139,7 +139,11 @@ class PostoGraduacaoController extends Controller
 
         $created = PostoGraduacaoPostoServico::select('postoGraduacao_id')->where('postoServico_id', $id)->get();
 
-        $graduacoes = PostoGraduacao::whereNotIn('id', $created->all())->get();
+        $enabledGraduacoes = $created->map(function ($item) {
+            return $item->postoGraduacao_id;
+        });
+
+        $graduacoes = PostoGraduacao::where('flgAtivo',1)->whereNotIn('id', $enabledGraduacoes)->get();
 
         return [
             'graduacoes' => $graduacoes
