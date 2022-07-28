@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Impedimento;
 use Illuminate\Database\Seeder;
 use Database\Seeders\SecaoSeeder;
 use Database\Seeders\MilitarSeeder;
@@ -28,5 +29,6 @@ class DatabaseSeeder extends Seeder
 		$this->call(PostoGraducaoPostoServicoSeeder::class);
 		$this->call(TipoImpedimentoSeeder::class);
 		$this->call(MilitarSeeder::class);
+		$this->call(ImpedimentoSeeder::class);
 	}
 }
