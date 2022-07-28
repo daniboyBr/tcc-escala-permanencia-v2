@@ -20,8 +20,10 @@ class ImpedimentoController extends Controller
      */
     public function index()
     {
+        // $militares = Militar::where('nomeGuerra','!=','System')->get();
+ 
         return view('impedimento/index', [
-            'militares' => Militar::where('nomeGuerra','!=','System')->paginate(5, ['nomeGuerra', 'email', 'id'])
+            'militares' => Militar::where('nomeGuerra','!=','System')->withCount('impedimentos')->orderBy('impedimentos_count','desc')->paginate(5, ['nomeGuerra', 'email', 'id', 'impedimentos_count' ])
         ]);
     }
 

@@ -16,6 +16,7 @@
                             <tr>
                                 <th>Militar</th>
                                 <th>E-mail</th>
+                                <th style="text-align: center;">Impedimentos</th>
                                 @if (auth()->check())
                                     @if (auth()->user()->isAdmin)
                                         <th>Novo Impedimento</th>
@@ -32,6 +33,7 @@
                                         </a>
                                     </td>
                                     <td>{{$m->email}}</td>
+                                    <td style="text-align: center;">{{$m->impedimentos_count}}</td>
                                     @if (auth()->check())
                                         @if (auth()->user()->isAdmin)
                                         <td>
@@ -47,6 +49,7 @@
                         </tbody>
                     </table>
                 </div>
+                {{ $militares->onEachSide(5)->links('vendor.pagination.custom-simple') }}
             </div>
         </div>
     </div>
