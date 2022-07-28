@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\SecaoSeeder;
 use Database\Seeders\MilitarSeeder;
 use Database\Seeders\PostoServicoSeeder;
 use Database\Seeders\PostoGraduacaoSeeder;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
 	{
 		// \App\Models\User::factory(10)->create();
 		$this->call(OrganizacaoMilitarSeeder::class);
+		$this->call(SecaoSeeder::class);
 		$this->call(PostoGraduacaoSeeder::class);
 		$this->call(PostoServicoSeeder::class);
 		$this->call(PostoGraducaoPostoServicoSeeder::class);

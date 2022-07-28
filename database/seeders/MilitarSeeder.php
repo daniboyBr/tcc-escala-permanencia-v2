@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\PostoGraduacao;
 use Illuminate\Database\Seeder;
 use App\Models\OrganizacaoMilitar;
+use App\Models\Secao;
 use Illuminate\Support\Facades\Hash;
 
 class MilitarSeeder extends Seeder
@@ -84,6 +85,34 @@ class MilitarSeeder extends Seeder
 			]);
 		}
 
-		\App\Models\Militar::factory(10)->create();
+		$secoes = Secao::all();
+		$postoGraduacao = PostoGraduacao::all();
+
+		foreach($postoGraduacao as $graduacao) {
+			foreach(array_fill(0, 9,"militar") as $key => $value){
+				foreach($secoes as $secao){
+					$militar = [
+						'name' => $faker->name(),
+						'email' => $faker->unique()->safeEmail(),
+						'nomeGuerra' => $faker->lastName(),
+						'organizacaoMilitar_id' => $secao->organizacaoMilitar_id,
+						'secao_id' => $secao->id,
+						'postoGraduacao_id' => $graduacao->id,
+						'ramal' => $faker->numerify('###'),
+						'telefoneResidencial' => $faker->numerify('##########'),
+						'telefoneCelular' => $faker->numerify('###########'),
+						'isAdmin' => false,
+						'flgAtivo' => true,
+						'email_verified_at' => now(),
+						'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+						'remember_token' => Str::random(10),
+					];
+
+					\App\Models\Militar::create($militar);
+				}
+			}
+		}
+
+		// \App\Models\Militar::factory(10)->create();
 	}
 }

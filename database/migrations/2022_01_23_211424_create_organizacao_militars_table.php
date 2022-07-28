@@ -15,7 +15,7 @@ class CreateOrganizacaoMilitarsTable extends Migration
 	{
 		Schema::create('organizacaoMilitar', function (Blueprint $table) {
 			$table->id();
-			$table->string('nome', 60);
+			$table->string('nome', 255);
 			$table->string('sigla', 10);
 			$table->boolean('flgAtivo')->default(true);
 			$table->string('inseridoPor', 100)->nullable();

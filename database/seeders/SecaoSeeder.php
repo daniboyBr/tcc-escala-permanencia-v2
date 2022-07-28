@@ -14,6 +14,28 @@ class SecaoSeeder extends Seeder
 	 */
 	public function run()
 	{
-		// \App\Models\Secao::factory()->count(5)->for(OrganizacaoMilitar::factory()->create())->create();
+		$oms = \App\Models\OrganizacaoMilitar::all();
+
+		$secoes = [
+			'EME',
+			'Seç Avl',
+			' Seç Pes',
+			'SCCR',
+			'Asse Intlg',
+			'SApur',
+			'SAAPes',
+			'AsseJur',
+			'SPE',
+			'Seç Infor'
+		];
+
+		foreach($oms as $om){
+			foreach($secoes as $secao){
+				\App\Models\Secao::create([
+					'nome' => $secao,
+					'organizacaoMilitar_id' => $om->id
+				]);
+			}
+		}
 	}
 }
