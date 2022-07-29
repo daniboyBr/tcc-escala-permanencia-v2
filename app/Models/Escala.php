@@ -44,14 +44,15 @@ class Escala extends MainModel
 
     public function postoServico()
     {
-        return $this->hasOneThrough(
-            PostoServico::class,  
-            PostoGraduacaoPostoServico::class,
-            PostoGraduacaoPostoServico::PRIMARI_KEY, // in PostoGraduacaoPostoServico
-            PostoServico::PRIMARY_KEY, // in on PostoGraducao
-            self::PG_POSTO_SERVICO_ID, // in Escala,
-            PostoGraduacaoPostoServico::POSTO_SERVICO_ID // in PostoGraducaoPostoServico
-        );
+        return $this->belongsTo(PostoServico::class, 'postoServico_id', 'id');
+        // return $this->hasOneThrough(
+        //     PostoServico::class,  
+        //     PostoGraduacaoPostoServico::class,
+        //     PostoGraduacaoPostoServico::PRIMARI_KEY, // in PostoGraduacaoPostoServico
+        //     PostoServico::PRIMARY_KEY, // in on PostoGraducao
+        //     self::PG_POSTO_SERVICO_ID, // in Escala,
+        //     PostoGraduacaoPostoServico::POSTO_SERVICO_ID // in PostoGraducaoPostoServico
+        // );
     }
 
     public function postoGraducao()

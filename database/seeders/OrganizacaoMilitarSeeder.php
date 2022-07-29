@@ -16,13 +16,6 @@ class OrganizacaoMilitarSeeder extends Seeder
 	{
 		// \App\Models\OrganizacaoMilitar::factory(10)->create();
 
-		\App\Models\OrganizacaoMilitar::factory()
-			->count(5)
-			->hasSecao(5, function (array $attributes, OrganizacaoMilitar $organizacaoMilitar) {
-				return ['organizacaoMilitar_id' => $organizacaoMilitar->id];
-			})
-			->create();
-
 		$oms = [
 			['sigla' => '11º CGCFEx' ,'nome' => '11º Centro de Gestão, Contabilidade e Finanças do Exército'],
 			['sigla' => 'B Adm QGEx' ,'nome' => 'Base Administrativa do Quartel-General do Exército'],

@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class PermanenciaDelivery extends Mailable
 {
@@ -28,8 +29,12 @@ class PermanenciaDelivery extends Mailable
      */
     public function build()
     {
-        $this->subject("Novo teste de e-mail");
+        $this->subject("Notificação: Escalação de Permanência");
         $this->to($this->user->email, $this->user->name);
-        return $this->view('mail.new',['user'=>$this->user->name]);
+        
+        return $this->html('mail.new',[
+            'user'=>$this->user->name,
+            'systemLogo' => public_path().'/img/exercito-logo.png'
+        ]);
     }
 }

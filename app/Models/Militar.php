@@ -124,4 +124,8 @@ class Militar extends Authenticatable implements Auditable
 	public function escala(){
 		$this->belongsTo(Escala::class, 'id', 'militar_id');
 	}
+
+	public function escalaTroca(){
+		$this->belongsTo(Escala::class, 'id', 'militarTroca_id');
+	}
 }
