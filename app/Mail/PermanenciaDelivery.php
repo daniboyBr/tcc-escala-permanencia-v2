@@ -31,10 +31,13 @@ class PermanenciaDelivery extends Mailable
     {
         $this->subject("Notificação: Escalação de Permanência");
         $this->to($this->user->email, $this->user->name);
+        $this->header['Content-Type'] ='text/html; charset=UTF-8';
         
-        return $this->html('mail.new',[
+        return $this->markdown('mail.new',[
             'user'=>$this->user->name,
-            'systemLogo' => public_path().'/img/exercito-logo.png'
+            'data' => $this->user->data,
+            'postoServico' => $this->user->postoServico,
+            'link' => url('confirm/escala', [$this->user->escala, $this->user->tokenCiente])
         ]);
     }
 }

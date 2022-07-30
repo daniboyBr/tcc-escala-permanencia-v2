@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Storage;
 use App\Models\PostoGraduacaoPostoServico;
+use GuzzleHttp\Psr7\Request;
 
 class EscalaController extends Controller
 {
@@ -23,19 +24,37 @@ class EscalaController extends Controller
 	 */
 	public function index()
 	{
-		// if(request()->hasFile('image')){
-		// 	dd(request()->file('image')->store('upload'));
-		// 	// return  Storage::download("upload/bkDdGgp7pqvhmnEsjdAZ9naHUrqfp2kXaNRz7nGi.bin","file.gp4");
-		// 	// dd(Storage::url('upload/bkDdGgp7pqvhmnEsjdAZ9naHUrqfp2kXaNRz7nGi.bin'));
+		$escala = Escala::where('data', Carbon::now()->subDay(2)->format('Y-m-d'))->get();
+		return view('escala/index', ['escala' => $escala ]);
+	}
 
-		// }
-		return view('escala/index');
+	public function confirm(string $escala, string $token)
+	{
+
+		$escala = Escala::where('uuidEscala', $escala)->where('tokenCiente', $token)->first();
+		$troca = Escala::where('uuidEscala', $escala)->where('tokenCienteTroca', $token)->first();
+
+		if($escala){
+			$escala->dtFlgCiente = Carbon::now();
+			$escala->FlgCiente = true;
+			$escala->save();
+		}
+
+		if($troca){
+			$troca->dtFlgCiente = Carbon::now();
+			$troca->FlgCiente = true;
+			$troca->save();
+		}
+
+		return redirect()->route('home-sistema');
 	}
 
 	public function generateEscala()
 	{
 		// Escala::truncate();
-		dd(Escala::count());
+		// dd(Escala::all());
+		// dd(Carbon::now()->subDay(3)->format('Y-m-d'));
+		// return Escala::where('data', Carbon::now()->subDay(2)->format('Y-m-d'))->get();
 
 		// $current = 0;
 
@@ -130,7 +149,7 @@ class EscalaController extends Controller
 		// 	];
 		// })->values()->all();
 
-		// dd(Escala::count());
+		// http://localhost:8080/confirm/escala/d8c399ef-cd35-4088-a9a2-849e7b54effb/Gd2xrbdazpbiBa3NpTBEl9NHj0bF7Z
 
 	}
 }

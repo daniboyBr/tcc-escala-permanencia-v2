@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Escala;
+use App\Models\PostoServico;
+use Illuminate\Support\Carbon;
 use App\Mail\PermanenciaDelivery;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -24,9 +27,15 @@ Route::get('envio-email', function(){
 	$user = new stdClass();
 	$user->email = 'admin@permanencia.com';
 	$user->name = 'Admin Enviando Email';
+    $user->postoServico = PostoServico::first()->nome;
+    $user->escala = Escala::first()->uuidEscala;
+    $user->tokenCiente = Escala::first()->tokenCiente;
+    $user->data = Carbon::now()->format('d/m/Y');
 	// return new PermanenciaDelivery($user);
 	Mail::send(new PermanenciaDelivery($user));
 });
+
+Route::get('confirm/escala/{escala}/{token}', [\App\Http\Controllers\EscalaController::class, 'confirm']);
 
 Auth::routes();
 

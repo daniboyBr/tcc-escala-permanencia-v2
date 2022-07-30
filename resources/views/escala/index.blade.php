@@ -21,19 +21,21 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($escala as $e)
                             <tr>
-                                <td rowspan="2" class="text-center">01/06/2019</td>
-                                <td>Teste teste teste</td>
-                                <td class="text-center">teste</td>
-                                <td class="text-center">teste</td>
-                                <td class="text-center">teste</td>
+                                <td rowspan="2" class="text-center">{{$e->data->format('d/m/Y')}}</td>
+                                <td>{{$e->militar->name}}</td>
+                                <td class="text-center">{{$e->militar->organizacao->sigla}}</td>
+                                <td class="text-center">{{$e->militar->secao->nome}}</td>
+                                <td class="text-center">{{$e->postoServico->nome}}</td>
                             </tr>
                             <tr>
-                                <td>teste</td>
-                                <td class="text-center">teste</td>
-                                <td class="text-center">teste</td>
-                                <td class="text-center">teste</td>
+                                <td>{{$e->militarTroca->name??''}}</td>
+                                <td class="text-center">{{$e->militarTroca->organizacao->sigla??''}}</td>
+                                <td class="text-center">{{$e->militarTroca->secao->nome??''}}</td>
+                                <td class="text-center">{{$e->postoServico->nome??''}}</td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

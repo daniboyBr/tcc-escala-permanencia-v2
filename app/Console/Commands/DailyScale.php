@@ -45,16 +45,8 @@ class DailyScale extends Command
      */
     public function handle()
     {
-        // $user = new \stdClass();
-        // $user->email = 'admin@permanencia.com';
-        // $user->name = 'Admin Enviando Email';
-        // // return new PermanenciaDelivery($user);
-        // Mail::send(new PermanenciaDelivery($user));
-        
-        // $this->info('Soldiers scheduled with success.');
-
         $now =  Carbon::now()->addDay(0);
-        $previousDay = $now->subDays(2);
+        $previousDay = Carbon::now()->subDays(2);
 
         $postoServico = PostoServico::with('postoGraduacao')->whereHas('postoGraduacao')
                             ->whereNotIn('id', function ($query) use($now) {

@@ -19,6 +19,10 @@ class EscalaObserver
         $user = new \stdClass();
         $user->email = $escala->militar->email;
         $user->name = $escala->militar->name;
+        $user->postoServico = $escala->postoServico->nome;
+        $user->escala = $escala->uuidEscala;
+        $user->tokenCiente = $escala->tokenCiente;
+        $user->data = $escala->data->format('d/m/Y');
         // return new PermanenciaDelivery($user);
         Mail::send(new PermanenciaDelivery($user));
     }

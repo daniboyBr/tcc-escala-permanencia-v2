@@ -12,7 +12,7 @@ class Escala extends MainModel
 
     protected $table = 'escala';
 
-    protected $dates = ['data'];
+    protected $dates = ['data', 'dtFlgCiente',  'dtFlgCienteTroca'];
 
     protected $fillable = [
         'postoServico_id',

@@ -82,8 +82,7 @@ class ImpedimentoController extends Controller
         $impedimento->fill($request->all());
         $impedimento->save();
 
-        return redirect()->route('militar-impedimento')
-                                ->with('success','Impedimento cadastrado com sucesso!');
+        return redirect()->route('home-sistema');
     }
 
 
