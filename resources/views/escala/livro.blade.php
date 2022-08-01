@@ -10,7 +10,7 @@
             <div class="card-body">
                 @include('template.messages')
                 <form action="{{url()->current()}}" method="POST">
-                    @csrf    
+                    @csrf
                     <div class="form-group">
                         <label for="bmd-label-floating">Data do Serviço:</label>
                         <input type="date" class="form-control" name="ramal" value="{{$escala->data->format('Y-m-d')}}" max="20" disabled>
@@ -25,7 +25,12 @@
                     </div>
                     <div class="form-group">
                         <label for="bmd-label-floating">Relato da Permanência:</label>
-                        <textarea name="livroPermanencia" cols="30" rows="10" class="form-control" required>{{$escala->livroPermanencia}}</textarea>
+                        <textarea name="livroPermanencia" cols="30" rows="10" class="form-control @error('livroPermanencia') is-invalid @enderror" required>{{$escala->livroPermanencia}}</textarea>
+                        @error('livroPermanencia')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-primary float-right">Registrar</button>
