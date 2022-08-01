@@ -45,8 +45,8 @@ class DailyScale extends Command
      */
     public function handle()
     {
-        $now =  Carbon::now()->addDay(0);
-        $previousDay = Carbon::now()->subDays(2);
+        $now =  Carbon::now()->addDay(2);
+        $previousDay = Carbon::now()->addDay(2)->subDays(3);
 
         $postoServico = PostoServico::with('postoGraduacao')->whereHas('postoGraduacao')
                             ->whereNotIn('id', function ($query) use($now) {

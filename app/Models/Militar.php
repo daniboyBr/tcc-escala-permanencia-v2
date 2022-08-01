@@ -40,7 +40,8 @@ class Militar extends Authenticatable implements Auditable
 		'atualizadoPor',
 		'organizacaoMilitar_id',
 		'secao_id',
-		'postoGraduacao_id'
+		'postoGraduacao_id',
+		'isAdmin'
     ];
 
 	/**
@@ -62,7 +63,8 @@ class Militar extends Authenticatable implements Auditable
 		'atualizadoPor',
 		'organizacaoMilitar_id',
 		'secao_id',
-		'postoGraduacao_id'
+		'postoGraduacao_id',
+		'identidade'
 	];
 
 	/**

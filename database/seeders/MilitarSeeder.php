@@ -58,7 +58,8 @@ class MilitarSeeder extends Seeder
 				'flgAtivo' => true,
 				'email_verified_at' => now(),
 				'remember_token' => Str::random(10),
-				'password' => Hash::make('12345678')
+				'password' => Hash::make('12345678'),
+				'identidade' => $this->generateIdentidade($faker)
 			]);
 		}
 
@@ -81,7 +82,8 @@ class MilitarSeeder extends Seeder
 				'flgAtivo' => true,
 				'email_verified_at' => now(),
 				'remember_token' => Str::random(10),
-				'password' => Hash::make(Str::random(10))
+				'password' => Hash::make(Str::random(10)),
+				'identidade' => $this->generateIdentidade($faker)
 			]);
 		}
 
@@ -106,6 +108,7 @@ class MilitarSeeder extends Seeder
 						'email_verified_at' => now(),
 						'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
 						'remember_token' => Str::random(10),
+						'identidade' => $this->generateIdentidade($faker)
 					];
 
 					\App\Models\Militar::create($militar);
@@ -115,4 +118,15 @@ class MilitarSeeder extends Seeder
 
 		// \App\Models\Militar::factory(10)->create();
 	}
+
+	private function generateIdentidade($faker)
+    {
+        $identidade = $faker->regexify('[0-9]{10}');
+
+        while(Militar::where('identidade', $identidade)->first()){
+            $identidade = $faker->regexify('[0-9]{10}');
+        }
+
+        return $identidade;
+    }
 }

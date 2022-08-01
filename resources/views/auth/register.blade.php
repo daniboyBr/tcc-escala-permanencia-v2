@@ -52,6 +52,19 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label for="identidade" class="col-md-4 col-form-label text-md-end">{{ __('Identidade') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="identidade" type="text" class="form-control @error('identidade') is-invalid @enderror" name="identidade" value="{{ old('identidade') }}" required autocomplete="identidade">
+
+                                @error('identidade')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
                             <label for="ramal" class="col-md-4 col-form-label text-md-end">{{ __('Ramal') }}</label>

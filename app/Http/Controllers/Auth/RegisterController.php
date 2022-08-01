@@ -61,6 +61,7 @@ class RegisterController extends Controller
 	protected function validator(array $data)
 	{
 		return Validator::make($data, [
+			'identidade' => ['required', 'string', 'max:11', 'unique:militar'],
 			'name' => ['required', 'string', 'max:255'],
 			'nomeGuerra' => ['required', 'string', 'max:60'],
 			'email' => ['required', 'string', 'email', 'max:255', 'unique:militar'],
@@ -85,6 +86,7 @@ class RegisterController extends Controller
 		return Militar::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
+			'identidade' =>  $data['identidade'],
 			'nomeGuerra' => $data['nomeGuerra'],
 			'organizacaoMilitar_id' => $data['organizacaoMilitar_id'],
 			'secao_id' => $data['secao_id'],

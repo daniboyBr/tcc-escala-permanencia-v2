@@ -48,6 +48,10 @@
     @endif
 </div>
 <div class="form-group">
+    <label for="bmd-label-floating">Identidade:</label>
+    <input type="text" class="form-control" name="ramal" value="{{$militar->identidade}}" max="20"> 
+</div>
+<div class="form-group">
     <label for="bmd-label-floating">Ramal:</label>
     <input type="text" class="form-control" name="ramal" value="{{$militar->ramal}}"> 
 </div>

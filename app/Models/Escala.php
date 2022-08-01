@@ -8,7 +8,7 @@ use App\Models\PostoGraduacaoPostoServico;
 
 class Escala extends MainModel 
 {
-    const PG_POSTO_SERVICO_ID = 'pgPostoServico_id';
+    const POSTO_SERVICO_ID = 'postoServico_id';
 
     protected $table = 'escala';
 
@@ -55,14 +55,14 @@ class Escala extends MainModel
         // );
     }
 
-    public function postoGraducao()
+    public function postoGraduacao()
     {
-        return $this->hasOneThrough(
+        return $this->hasManyThrough(
             PostoGraduacao::class,  
             PostoGraduacaoPostoServico::class,
-            PostoGraduacaoPostoServico::PRIMARI_KEY, // in PostoGraduacaoPostoServico
+            PostoGraduacaoPostoServico::POSTO_SERVICO_ID, // in PostoGraduacaoPostoServico
             PostoGraduacao::PRIMARY_KEY, // in on PostoGraducao
-            self::PG_POSTO_SERVICO_ID, // in Escala,
+            self::POSTO_SERVICO_ID, // in Escala,
             PostoGraduacaoPostoServico::POSTO_GRADUACAO_ID // in PostoGraducaoPostoServico
         );
     }

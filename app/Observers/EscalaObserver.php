@@ -23,6 +23,7 @@ class EscalaObserver
         $user->escala = $escala->uuidEscala;
         $user->tokenCiente = $escala->tokenCiente;
         $user->data = $escala->data->format('d/m/Y');
+        $user->template = PermanenciaDelivery::TEMPLATE_CREATE_ESCALA;
         // return new PermanenciaDelivery($user);
         Mail::send(new PermanenciaDelivery($user));
     }

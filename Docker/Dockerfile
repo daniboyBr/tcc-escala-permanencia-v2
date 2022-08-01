@@ -18,7 +18,10 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     git-core \
     python3 \
-    gnupg
+    gnupg \
+    tzdata 
+
+ENV TZ="America/Sao_Paulo"
 
 RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs

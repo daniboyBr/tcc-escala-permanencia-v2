@@ -49,6 +49,10 @@ Route::middleware(['user.active'])->group(function () {
 	Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->withoutMiddleware('user.active');
 	Route::get('/escala', [\App\Http\Controllers\EscalaController::class, 'index'])->name('home-sistema');
 	Route::post('/escala', [\App\Http\Controllers\EscalaController::class, 'index']);
+	Route::get('switch/escala/{escala}', [\App\Http\Controllers\EscalaController::class, 'trocar'])->name('switch-militar');
+	Route::post('confirm/switch/{escala}', [\App\Http\Controllers\EscalaController::class, 'efetuarTroca'])->name('confirm-switch-militar');
+	Route::get('registro/livro/{escala}', [\App\Http\Controllers\EscalaController::class, 'registrarPermanencia'])->name('escala-register');
+	Route::post('registro/livro/{escala}', [\App\Http\Controllers\EscalaController::class, 'registrarPermanencia']);
 
 	Route::get('/secao', [\App\Http\Controllers\SecaoController::class, 'index']);
     Route::get('/secao/create', [\App\Http\Controllers\SecaoController::class, 'create'])->name('create-secao');
@@ -111,6 +115,9 @@ Route::middleware(['user.active'])->group(function () {
     Route::get('/militar/{id}/update', [\App\Http\Controllers\MilitarController::class, 'edit'])->name('update-militar');
     Route::post('/militar/{id}/update', [\App\Http\Controllers\MilitarController::class, 'update']);
 
-    Route::get('/escala/generate', [\App\Http\Controllers\EscalaController::class, 'generateEscala']);
+    Route::get('/escala/audits', [\App\Http\Controllers\EscalaController::class, 'auditsRecords']);
+
+
+    // Route::get('switch/escala/{escala?}/identidade/{identidade?}', [\App\Http\Controllers\EscalaController::class, 'trocar'])->name('militar-troca-search');
 
 });

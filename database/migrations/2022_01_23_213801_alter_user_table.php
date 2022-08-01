@@ -21,6 +21,7 @@ class AlterUserTable extends Migration
 			$table->unsignedBigInteger('secao_id');
 			$table->unsignedBigInteger('postoGraduacao_id');
 
+			$table->string('identidade', 20)->unique();
 			$table->string('nomeGuerra', 60);
 			$table->string('imagem', 45)->nullable();
 			$table->string('ramal', 45)->nullable();
